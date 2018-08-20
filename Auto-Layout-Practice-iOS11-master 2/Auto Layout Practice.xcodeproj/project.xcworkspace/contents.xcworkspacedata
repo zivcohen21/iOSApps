@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Auto Layout calculator.xcodeproj">
+      location = "self:Auto Layout Practice.xcodeproj">
    </FileRef>
 </Workspace>

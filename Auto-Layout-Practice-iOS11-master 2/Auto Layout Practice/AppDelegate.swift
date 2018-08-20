@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  Auto Layout calculator
+//  Auto Layout Practice
 //
-//  Created by matan elimelech on 19/08/2018.
-//  Copyright © 2018 Moveo. All rights reserved.
+//  Created by Angela Yu on 01/12/2016.
+//  Copyright © 2016 London App Brewery. All rights reserved.
 //
 
 import UIKit
