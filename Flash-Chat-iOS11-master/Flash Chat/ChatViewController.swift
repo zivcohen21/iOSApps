@@ -16,17 +16,20 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // Declare instance variables here
     var messageArray : [Message] = [Message]()
     
-    
     // We've pre-linked the IBOutlets
     @IBOutlet var heightConstraint: NSLayoutConstraint!
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var messageTextfield: UITextField!
     @IBOutlet var messageTableView: UITableView!
     
+    var messageFieldViewHeight: CGFloat = 0.0
     
+    @IBOutlet weak var textFieldView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        messageFieldViewHeight = textFieldView.frame.size.height
         
         //TODO: Set yourself as the delegate and datasource here:
         messageTableView.delegate = self
@@ -51,6 +54,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageTableView.separatorStyle = .none
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    }
+    
     ///////////////////////////////////////////
     
     //MARK: - TableView DataSource Methods
@@ -108,10 +116,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     //TODO: Declare textFieldDidBeginEditing here:
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
-        UIView.animate(withDuration: 0.5, animations: {
-            self.heightConstraint.constant = 308
-            self.view.layoutIfNeeded()
-        })
+
     }
     
     
@@ -125,6 +130,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         })
     }
 
+    @objc func keyboardWillShow(notification: Notification) {
+        let userInfo:NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = Float(keyboardRectangle.height)
+
+        UIView.animate(withDuration: 0.5, animations: {
+            self.heightConstraint.constant = CGFloat(keyboardHeight) + self.messageFieldViewHeight
+            self.view.layoutIfNeeded()
+        })
+    }
     
     ///////////////////////////////////////////
     
