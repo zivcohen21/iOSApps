@@ -15,10 +15,11 @@ class LogInViewController: UIViewController {
     //Textfields pre-linked with IBOutlets
     @IBOutlet var emailTextfield: UITextField!
     @IBOutlet var passwordTextfield: UITextField!
+    @IBOutlet weak var logInButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        passwordTextfield.isSecureTextEntry = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,6 +29,7 @@ class LogInViewController: UIViewController {
    
     @IBAction func logInPressed(_ sender: AnyObject) {
 
+        changeUserInteraction(isEnable: false)
         SVProgressHUD.show()
         
         Auth.auth().signIn(withEmail: emailTextfield.text!, password: passwordTextfield.text!) {
@@ -38,13 +40,19 @@ class LogInViewController: UIViewController {
             } else {
                 print("Log in Successful!")
                 SVProgressHUD.dismiss()
+                self.changeUserInteraction(isEnable: true)
                 self.performSegue(withIdentifier: "goToChat", sender: self)
             }
         }
-        
-        
+
     }
     
+    func changeUserInteraction(isEnable: Bool) {
+        navigationController?.navigationBar.isUserInteractionEnabled = isEnable
+        logInButton.isUserInteractionEnabled = isEnable
+        emailTextfield.isUserInteractionEnabled = isEnable
+        passwordTextfield.isUserInteractionEnabled = isEnable
+    }
 
 
     

@@ -69,6 +69,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.messageBody.text = messageArray[indexPath.row].messageBody
         cell.senderUsername.text = messageArray[indexPath.row].sender
+        cell.messageDate.text = messageArray[indexPath.row].messageDate
+    
+        
         cell.avatarImageView.image = UIImage(named: "egg")
         
         if cell.senderUsername.text == Auth.auth().currentUser?.email as String? {
@@ -103,6 +106,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageTableView.rowHeight = UITableViewAutomaticDimension
         messageTableView.estimatedRowHeight = 120.0
     }
+
     
     
     ///////////////////////////////////////////
@@ -156,8 +160,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageTextfield.isEnabled = false
         
         let messagesDB = Database.database().reference().child("Messages")
-        
-        let messageDictionary = ["Sender": Auth.auth().currentUser?.email, "MessageBody": messageTextfield.text!]
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM HH:mm"
+        let dateNow = formatter.string(from: Date())
+        let messageDictionary = ["Sender": Auth.auth().currentUser?.email, "MessageBody": messageTextfield.text!, "Date": dateNow]
         
         messagesDB.childByAutoId().setValue(messageDictionary) {
             (error, reference) in
@@ -182,10 +188,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             let snapshotValue = snapshot.value as! Dictionary<String, String>
             let text = snapshotValue["MessageBody"]!
             let sender = snapshotValue["Sender"]!
+            let messageDate = snapshotValue["Date"]!
             
             let message = Message()
             message.messageBody = text
             message.sender = sender
+            message.messageDate = messageDate
+        
             
             self.messageArray.append(message)
             self.configureTableView()
