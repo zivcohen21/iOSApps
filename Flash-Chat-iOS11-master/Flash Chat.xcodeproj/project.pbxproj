@@ -10,7 +10,7 @@
 		1DCA651B01087296042EB9DB /* Pods_Flash_Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789B909DCE5D1D6900A91CB6 /* Pods_Flash_Chat.framework */; };
 		6321A9C31B94EBA10053D2E7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6321A9C21B94EBA10053D2E7 /* Images.xcassets */; };
 		6321A9E21B94EBE70053D2E7 /* CustomMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6321A9DB1B94EBE70053D2E7 /* CustomMessageCell.swift */; };
-		6321A9E51B94EBE70053D2E7 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6321A9DE1B94EBE70053D2E7 /* MessageCell.xib */; };
+		6321A9E51B94EBE70053D2E7 /* CustomMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6321A9DE1B94EBE70053D2E7 /* CustomMessageCell.xib */; };
 		63E28B251B9A335300FBF6E0 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E28B241B9A335300FBF6E0 /* Message.swift */; };
 		63E28B291B9A336600FBF6E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63E28B281B9A336600FBF6E0 /* Main.storyboard */; };
 		63E28B2F1B9A337600FBF6E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E28B2A1B9A337600FBF6E0 /* AppDelegate.swift */; };
@@ -23,6 +23,11 @@
 		A666FCFB21354A3200B6C82B /* FormItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A666FCF921354A3200B6C82B /* FormItemTableViewCell.swift */; };
 		A666FCFC21354A3200B6C82B /* FormItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A666FCFA21354A3200B6C82B /* FormItemTableViewCell.xib */; };
 		A666FCFE21354F8F00B6C82B /* FormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A666FCFD21354F8F00B6C82B /* FormItem.swift */; };
+		A666FD03213BD28900B6C82B /* MyMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A666FD01213BD28900B6C82B /* MyMessageTableViewCell.swift */; };
+		A666FD04213BD28900B6C82B /* MyMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A666FD02213BD28900B6C82B /* MyMessageTableViewCell.xib */; };
+		A666FD06213BDE7800B6C82B /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A666FD05213BDE7800B6C82B /* MessageCell.swift */; };
+		A666FD0A213C3AAB00B6C82B /* ImageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A666FD09213C3AAA00B6C82B /* ImageMessage.swift */; };
+		A6EA6731213D5EE500598150 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EA6730213D5EE500598150 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +36,7 @@
 		6321A9BA1B94EBA10053D2E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6321A9C21B94EBA10053D2E7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6321A9DB1B94EBE70053D2E7 /* CustomMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomMessageCell.swift; sourceTree = "<group>"; };
-		6321A9DE1B94EBE70053D2E7 /* MessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
+		6321A9DE1B94EBE70053D2E7 /* CustomMessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomMessageCell.xib; sourceTree = "<group>"; };
 		63E28B241B9A335300FBF6E0 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		63E28B281B9A336600FBF6E0 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		63E28B2A1B9A337600FBF6E0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +50,11 @@
 		A666FCF921354A3200B6C82B /* FormItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormItemTableViewCell.swift; sourceTree = "<group>"; };
 		A666FCFA21354A3200B6C82B /* FormItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormItemTableViewCell.xib; sourceTree = "<group>"; };
 		A666FCFD21354F8F00B6C82B /* FormItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormItem.swift; sourceTree = "<group>"; };
+		A666FD01213BD28900B6C82B /* MyMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessageTableViewCell.swift; sourceTree = "<group>"; };
+		A666FD02213BD28900B6C82B /* MyMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyMessageTableViewCell.xib; sourceTree = "<group>"; };
+		A666FD05213BDE7800B6C82B /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		A666FD09213C3AAA00B6C82B /* ImageMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessage.swift; sourceTree = "<group>"; };
+		A6EA6730213D5EE500598150 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D6C6DED77C8E0732E168E129 /* Pods-Flash Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flash Chat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flash Chat/Pods-Flash Chat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,7 +114,10 @@
 			isa = PBXGroup;
 			children = (
 				6321A9DB1B94EBE70053D2E7 /* CustomMessageCell.swift */,
-				6321A9DE1B94EBE70053D2E7 /* MessageCell.xib */,
+				6321A9DE1B94EBE70053D2E7 /* CustomMessageCell.xib */,
+				A666FD01213BD28900B6C82B /* MyMessageTableViewCell.swift */,
+				A666FD02213BD28900B6C82B /* MyMessageTableViewCell.xib */,
+				A666FD05213BDE7800B6C82B /* MessageCell.swift */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -136,6 +149,8 @@
 			children = (
 				63E28B241B9A335300FBF6E0 /* Message.swift */,
 				A666FCFD21354F8F00B6C82B /* FormItem.swift */,
+				A666FD09213C3AAA00B6C82B /* ImageMessage.swift */,
+				A6EA6730213D5EE500598150 /* User.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -233,8 +248,9 @@
 				6321A9C31B94EBA10053D2E7 /* Images.xcassets in Resources */,
 				A6097653212C59C800937A15 /* GoogleService-Info.plist in Resources */,
 				63EBB3051D98004B004175E5 /* LaunchScreen.storyboard in Resources */,
+				A666FD04213BD28900B6C82B /* MyMessageTableViewCell.xib in Resources */,
 				A666FCFC21354A3200B6C82B /* FormItemTableViewCell.xib in Resources */,
-				6321A9E51B94EBE70053D2E7 /* MessageCell.xib in Resources */,
+				6321A9E51B94EBE70053D2E7 /* CustomMessageCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,15 +312,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6EA6731213D5EE500598150 /* User.swift in Sources */,
+				A666FD06213BDE7800B6C82B /* MessageCell.swift in Sources */,
 				63E28B331B9A337600FBF6E0 /* WelcomeViewController.swift in Sources */,
 				A666FCFE21354F8F00B6C82B /* FormItem.swift in Sources */,
 				63E28B251B9A335300FBF6E0 /* Message.swift in Sources */,
 				6321A9E21B94EBE70053D2E7 /* CustomMessageCell.swift in Sources */,
+				A666FD0A213C3AAB00B6C82B /* ImageMessage.swift in Sources */,
 				63E28B321B9A337600FBF6E0 /* RegisterViewController.swift in Sources */,
 				63E28B311B9A337600FBF6E0 /* LogInViewController.swift in Sources */,
 				A666FCFB21354A3200B6C82B /* FormItemTableViewCell.swift in Sources */,
 				63E28B2F1B9A337600FBF6E0 /* AppDelegate.swift in Sources */,
 				63E28B301B9A337600FBF6E0 /* ChatViewController.swift in Sources */,
+				A666FD03213BD28900B6C82B /* MyMessageTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

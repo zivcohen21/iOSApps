@@ -65,6 +65,11 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         formItemsTableView.register(UINib(nibName: "FormItemTableViewCell", bundle: nil), forCellReuseIdentifier: "FormItemTableViewCell")
         
         fileNameLabel.text = ""
+        
+        for (_ , item) in formItemsDict {
+            
+            item.clearItemValue()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,8 +79,8 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        
-        
+        moveViewDown()
+
     }
     
     @objc func keyboardWillShow(notification: Notification) {
@@ -92,11 +97,7 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
 
     @objc func tableViewTapped() {
         print("tableViewTapped")
-        formItemsTableView.endEditing(true)
-        UIView.animate(withDuration: 0.5, animations: {
-            self.heightConstraint.constant = self.buttomViewHeight
-            self.view.layoutIfNeeded()
-        })
+        moveViewDown()
     }
     
     func textFieldValueChanged(value: String, key: String) {
@@ -144,14 +145,22 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
                             self.dictToSave[key] = item.value
                         }
                         
-                        print("Registration Successful!")
-                        SVProgressHUD.dismiss()
-                        self.changeUserInteraction(isEnable: true)
-                        
-                        self.performSegue(withIdentifier: "goToChat", sender: self)
-                        for (_ , item) in self.formItemsDict {
-                            
-                            item.value = nil
+                        self.userDetailsDB.childByAutoId().setValue(self.dictToSave) {
+                            (error, reference) in
+                            if error != nil {
+                                print(error!)
+                            }
+                            else {
+                                print("Details saved successfully!")
+                                SVProgressHUD.dismiss()
+                                self.changeUserInteraction(isEnable: true)
+                                
+                                self.performSegue(withIdentifier: "goToChat", sender: self)
+                                for (_ , item) in self.formItemsDict {
+                                    
+                                    item.value = nil
+                                }
+                            }
                         }
                     }
                 }
@@ -168,6 +177,19 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         navigationController?.navigationBar.isUserInteractionEnabled = isEnable
         formItemsTableView.isUserInteractionEnabled = isEnable
         registerButton.isUserInteractionEnabled = isEnable
+        uploadImageButton.isUserInteractionEnabled = isEnable
+    }
+    
+    func moveViewDown() {
+        formItemsTableView.endEditing(true)
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.heightConstraint.constant = self.buttomViewHeight
+            self.view.layoutIfNeeded()
+        })
+        
+        formItemsTableView.reloadData()
+        
     }
     
     func checkValidValue() {
@@ -178,11 +200,9 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         
         for (_ , item) in formItemsDict {
             
-            if item.isValid {
-                item.checkValidity()
-            }
-            else {
-                validData = false
+            item.checkValidity()
+            if !item.isValid {
+                 validData = false
             }
         }
     }
@@ -198,13 +218,16 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
-        let imageName = "profileImage"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM HH:mm"
+        let dateNow = formatter.string(from: Date())
+        let imageName = "profileImage-\(dateNow)"
         let image_data = info[UIImagePickerControllerOriginalImage] as? UIImage
         self.dismiss(animated: true, completion: nil)
         changeUserInteraction(isEnable: false)
         SVProgressHUD.show()
         let imageRef = Storage.storage().reference().child("images/\(imageName).png)")
-        if let imageData = UIImagePNGRepresentation(image_data!) {
+        if let imageData = UIImageJPEGRepresentation(image_data!, 0.6) {
             imageRef.putData(imageData, metadata: nil) {
                 (metadata, error) in
                 if error != nil {
@@ -218,22 +241,15 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
                         guard let urlString = url?.absoluteString else {return}
                         print(self.dictToSave)
                         self.dictToSave["imageURL"] = urlString
-                        self.userDetailsDB.childByAutoId().setValue(self.dictToSave) {
-                            (error, reference) in
-                            if error != nil {
-                                print(error!)
-                            }
-                            else {
-                                print("Details saved successfully!")
-                            }
-                        }
+                        
                         
                         self.fileNameLabel.text = imageName
                         self.uploadImageButton.setTitle("Change Picture", for: .normal)
-                        SVProgressHUD.dismiss()
-                        self.changeUserInteraction(isEnable: true)
+                       
                     }
                 }
+                SVProgressHUD.dismiss()
+                self.changeUserInteraction(isEnable: true)
             }
         }
         
