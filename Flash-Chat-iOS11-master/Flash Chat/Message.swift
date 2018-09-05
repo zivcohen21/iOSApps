@@ -14,9 +14,11 @@ class Message {
     var messageDate: String = ""
     var isImage : Bool = false
     var profileImage : UIImage!
+    var email : String
     
-    init(sender : String, messageBody : String, messageDate : String, isImage : Bool, profileImage : UIImage) {
+    init(sender : String, email : String, messageBody : String, messageDate : String, isImage : Bool, profileImage : UIImage) {
         self.sender = sender
+        self.email = email
         self.messageBody = messageBody
         self.messageDate = messageDate
         self.isImage = isImage

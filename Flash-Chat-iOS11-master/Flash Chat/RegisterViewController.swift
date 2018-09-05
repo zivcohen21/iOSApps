@@ -23,6 +23,9 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     var buttomViewHeight: CGFloat = 0.0
     var validData: Bool = false
     var dictToSave: [String : String] = [:]
+    var imageName: String = ""
+    var image_data: UIImage?
+    var imageRef : StorageReference = StorageReference()
     
     let userNameKey = "name"
     let phoneKey = "phone"
@@ -65,9 +68,9 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         formItemsTableView.register(UINib(nibName: "FormItemTableViewCell", bundle: nil), forCellReuseIdentifier: "FormItemTableViewCell")
         
         fileNameLabel.text = ""
+        formItemsTableView.reloadData()
         
         for (_ , item) in formItemsDict {
-            
             item.clearItemValue()
         }
     }
@@ -137,39 +140,28 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
                 Auth.auth().createUser(withEmail: (formItemsDict[emailKey]?.value)!, password: (formItemsDict[passwordKey]?.value)!) {
                     (user, error) in
                     if error != nil {
-                        print(error!)
+                        self.moveViewDown()
+                        let alert = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        SVProgressHUD.dismiss()
+                        self.changeUserInteraction(isEnable: true)
                     }
                     else {
                         //Success
                         for (key, item) in self.formItemsDict {
                             self.dictToSave[key] = item.value
                         }
-                        
-                        self.userDetailsDB.childByAutoId().setValue(self.dictToSave) {
-                            (error, reference) in
-                            if error != nil {
-                                print(error!)
-                            }
-                            else {
-                                print("Details saved successfully!")
-                                SVProgressHUD.dismiss()
-                                self.changeUserInteraction(isEnable: true)
-                                
-                                self.performSegue(withIdentifier: "goToChat", sender: self)
-                                for (_ , item) in self.formItemsDict {
-                                    
-                                    item.value = ""
-                                }
-                            }
-                        }
+                        self.saveDetails()
                     }
+                    self.moveViewDown()
+                    self.fileNameLabel.text = ""
                 }
             }
             else {
                 formItemsDict[vPasswordKey]?.errorMessage = "Confirm password is not equal to password"
                 formItemsTableView.reloadData()
             }
-
         }
     }
     
@@ -207,7 +199,6 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    
     @IBAction func uploadImage(_ sender: Any) {
         
         let myPickerController = UIImagePickerController()
@@ -218,42 +209,56 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
+        print("imagePickerController1")
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM HH:mm"
         let dateNow = formatter.string(from: Date())
-        let imageName = "profileImage-\(dateNow)"
-        let image_data = info[UIImagePickerControllerOriginalImage] as? UIImage
+        imageName = "profileImage-\(dateNow)"
+        image_data = info[UIImagePickerControllerOriginalImage] as? UIImage
         self.dismiss(animated: true, completion: nil)
-        changeUserInteraction(isEnable: false)
-        SVProgressHUD.show()
-        let imageRef = Storage.storage().reference().child("images/\(imageName).png")
+        imageRef = Storage.storage().reference().child("images/\(imageName).png")
+        self.fileNameLabel.text = self.imageName
+        self.uploadImageButton.setTitle("Change Picture", for: .normal)
+        print("imagePickerController2")
+    }
     
+    func saveDetails() {
+        print("saveImage")
         if let imageData = UIImageJPEGRepresentation(image_data!, 0.1) {
             imageRef.putData(imageData, metadata: nil) {
                 (metadata, error) in
                 if error != nil {
-                    print(error)
-                    return
+                    print(error!)
+                    print("error1")
                 }
                 else {
-                    imageRef.downloadURL {
+                    self.imageRef.downloadURL {
                         url, error in
                         guard error == nil else {return}
                         guard let urlString = url?.absoluteString else {return}
                         print(self.dictToSave)
                         self.dictToSave["imageURL"] = urlString
                         
-                        
-                        self.fileNameLabel.text = imageName
-                        self.uploadImageButton.setTitle("Change Picture", for: .normal)
-                       
+                        self.userDetailsDB.childByAutoId().setValue(self.dictToSave) {
+                            (error, reference) in
+                            if error != nil {
+                                print(error!)
+                            }
+                            else {
+                                print("Details saved successfully!")
+                                self.performSegue(withIdentifier: "goToChat", sender: self)
+                                for (_ , item) in self.formItemsDict {
+                                    
+                                    item.value = ""
+                                }
+                            }
+                            SVProgressHUD.dismiss()
+                            self.changeUserInteraction(isEnable: true)
+                        }
                     }
                 }
-                SVProgressHUD.dismiss()
-                self.changeUserInteraction(isEnable: true)
             }
         }
-        
     }
 }
 

@@ -168,6 +168,7 @@
                         <outlet property="heightConstraint" destination="PGA-Hu-cXd" id="CWU-sx-PeB"/>
                         <outlet property="registerButton" destination="GsQ-AY-dcq" id="jGL-ua-FdO"/>
                         <outlet property="uploadImageButton" destination="VZ1-1o-fSv" id="fq9-Y7-xfW"/>
+                        <outlet property="view" destination="15o-yi-McO" id="z91-5d-hpA"/>
                         <segue destination="vXZ-lx-hvc" kind="push" identifier="goToChat" id="mOy-cb-hAN"/>
                     </connections>
                 </viewController>

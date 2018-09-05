@@ -70,7 +70,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         var cell = MessageCell()
         
-        if messageArray[indexPath.row].sender == Auth.auth().currentUser?.email {
+        if messageArray[indexPath.row].email == Auth.auth().currentUser?.email {
             if messageArray[indexPath.row].isImage {
                 print(messageArray[indexPath.row].messageDate)
                 cell = tableView.dequeueReusableCell(withIdentifier: "myImageMessageTableViewCell", for: indexPath) as! MyImageMessageTableViewCell
@@ -117,10 +117,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     //TODO: Declare tableViewTapped here:
     @objc func tableViewTapped() {
         messageTextfield.endEditing(true)
-        UIView.animate(withDuration: 0.5, animations: {
-            self.heightConstraint.constant = 50
-            self.view.layoutIfNeeded()
-        })
+        removeKeyboard()
     }
     
     
@@ -158,6 +155,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                     
                     let user = User()
+                    user.name = valueDict["name"]!
                     user.email = valueDict["email"]!
                     user.country = valueDict["country"]!
                     user.city = valueDict["city"]!
@@ -176,39 +174,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         })
     }
     
-//    func getImage(_ sender: String, completion: @escaping (_ results: UIImage)->()) {
-//
-//        var image = UIImage(named: "egg")
-//
-//        let userDetails = Database.database().reference().child("userDetails")
-//
-//        userDetails.observe(.value) {
-//            (snapshot) in
-//
-//            let snapshotValue = snapshot.value as! Dictionary<String, Any>
-//            for (_ , value) in snapshotValue {
-//                let valueDict = value as! Dictionary<String, String>
-//                if valueDict["email"] == sender {
-//                    let imageURL = valueDict["imageURL"]
-//                    let storageRef = Storage.storage().reference(forURL: imageURL as! String)
-//                    storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-//                        if let error = error {
-//                            print(error)
-//                        } else {
-//                            if let imageData = data {
-//                                image = UIImage(data: imageData)
-//                                completion(image!)
-//                                print("1 \(image!.size)")
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        print("2 \(image!.size)")
-//    }
-
-
     @objc func keyboardWillShow(notification: Notification) {
         let userInfo:NSDictionary = notification.userInfo! as NSDictionary
         let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
@@ -240,7 +205,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     //TODO: Create the retrieveMessages method here:
     func retrieveMessages() {
         print("retrieveMessages")
-        var sender = ""
         let messageDB = Database.database().reference().child("Messages")
         messageDB.observeSingleEvent(of: .value, with: {
             (snapshot) in
@@ -250,11 +214,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     print("snapshotValue")
                     let valueDict = value as! Dictionary<String, Any>
                     let text = valueDict["MessageBody"] as! String?
-                    sender = (valueDict["Sender"] as! String?)!
+                    let sender = (valueDict["Sender"] as! String?)!
+                    let email = (valueDict["Email"] as! String?)!
                     let messageDate = valueDict["Date"] as! String?
-                    let isImage = valueDict["isImage"] as! Bool
+                    let isImage = valueDict["IsImage"] as! Bool
                     
-                    self.initMessage(text!, isImage, messageDate!, sender)
+                    self.initMessage(text!, isImage, messageDate!, sender, email)
                     self.messageTableView.reloadData()
                 }
             }
@@ -312,6 +277,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.saveMessage(urlString, isImage: true)
                         
                         self.messageTextfield.text = imageName
+                        self.removeKeyboard()
                         SVProgressHUD.dismiss()
                         self.changeUserInteraction(isEnable: true)
                     }
@@ -329,10 +295,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func saveMessage(_ messageText: String, isImage: Bool) {
         
-        let sender = Auth.auth().currentUser?.email
+        let email = (Auth.auth().currentUser?.email)!
+        let sender = allUsers[email]?.name
         let messagesDB = Database.database().reference().child("Messages")
         let dateNow = getDateNow()
-        let messageDictionary = ["Sender": sender, "MessageBody": messageText, "Date": dateNow, "isImage": isImage] as [String : Any]
+        let messageDictionary = ["Sender": sender!, "Email": email ,"MessageBody": messageText, "Date": dateNow, "IsImage": isImage] as [String : Any]
         
 
         messagesDB.childByAutoId().setValue(messageDictionary) {
@@ -342,7 +309,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             else {
                 
-                self.initMessage(messageText, isImage, dateNow, sender!)
+                self.initMessage(messageText, isImage, dateNow, sender!, email)
                 
                 self.messageTableView.reloadData()
                 print("Message saved successfully!")
@@ -363,7 +330,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func initMessage(_ messageText: String, _ isImage: Bool, _ dateNow: String, _ sender: String) {
+    func initMessage(_ messageText: String, _ isImage: Bool, _ dateNow: String, _ sender: String, _ email: String) {
         
         print("initMessage")
         if isImage
@@ -375,17 +342,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 } else {
                     if let imageData = data {
                         
-                        let imageMessage = ImageMessage(sender: sender, messageBody: "", messageDate: dateNow, isImage: isImage, profileImage: (self.allUsers[sender]?.profileImage)!, imageToSend: UIImage(data: imageData)!)
+                        let imageMessage = ImageMessage(sender: sender, email: email, messageBody: "", messageDate: dateNow, isImage: isImage, profileImage: (self.allUsers[email]?.profileImage)!, imageToSend: UIImage(data: imageData)!)
                         self.messageArray.append(imageMessage)
                         print("3 \(imageMessage.imageToSend!.size)")
                         self.messageTableView.reloadData()
                     }
                 }
             }
-            //            let imageMessage = ImageMessage(sender: sender!, messageBody: messageText, messageDate: dateNow, isImage: isImage, profileImage: (self.allUsers[sender]?.profileImage)!, )
+
         }
         else {
-            let message = Message(sender: sender, messageBody: messageText, messageDate: dateNow, isImage: isImage, profileImage: (self.allUsers[sender]?.profileImage)!)
+            let message = Message(sender: sender, email: email, messageBody: messageText, messageDate: dateNow, isImage: isImage, profileImage: (self.allUsers[email]?.profileImage)!)
             self.messageArray.append(message)
         }
         
@@ -395,6 +362,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM HH:mm"
         return formatter.string(from: Date())
+    }
+    
+    func removeKeyboard() {
+    
+        UIView.animate(withDuration: 0.5, animations: {
+            self.heightConstraint.constant = 50
+            self.view.layoutIfNeeded()
+        })
     }
 
 }

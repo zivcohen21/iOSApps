@@ -36,7 +36,9 @@ class LogInViewController: UIViewController {
             
             (user, error) in
             if error != nil {
-                print(error!)
+                let alert = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             } else {
                 print("Log in Successful!")
                 self.performSegue(withIdentifier: "goToChat", sender: self)
