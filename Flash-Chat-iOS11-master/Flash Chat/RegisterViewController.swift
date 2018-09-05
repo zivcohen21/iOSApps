@@ -158,7 +158,7 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
                                 self.performSegue(withIdentifier: "goToChat", sender: self)
                                 for (_ , item) in self.formItemsDict {
                                     
-                                    item.value = nil
+                                    item.value = ""
                                 }
                             }
                         }
@@ -226,8 +226,9 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         self.dismiss(animated: true, completion: nil)
         changeUserInteraction(isEnable: false)
         SVProgressHUD.show()
-        let imageRef = Storage.storage().reference().child("images/\(imageName).png)")
-        if let imageData = UIImageJPEGRepresentation(image_data!, 0.6) {
+        let imageRef = Storage.storage().reference().child("images/\(imageName).png")
+    
+        if let imageData = UIImageJPEGRepresentation(image_data!, 0.1) {
             imageRef.putData(imageData, metadata: nil) {
                 (metadata, error) in
                 if error != nil {

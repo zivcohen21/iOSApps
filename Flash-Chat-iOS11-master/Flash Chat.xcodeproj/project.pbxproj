@@ -28,6 +28,11 @@
 		A666FD06213BDE7800B6C82B /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A666FD05213BDE7800B6C82B /* MessageCell.swift */; };
 		A666FD0A213C3AAB00B6C82B /* ImageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A666FD09213C3AAA00B6C82B /* ImageMessage.swift */; };
 		A6EA6731213D5EE500598150 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EA6730213D5EE500598150 /* User.swift */; };
+		A6EA6735213D88E800598150 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EA6734213D88E800598150 /* ProfileViewController.swift */; };
+		A6EA6738213E83AE00598150 /* MyImageMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EA6736213E83AE00598150 /* MyImageMessageTableViewCell.swift */; };
+		A6EA6739213E83AE00598150 /* MyImageMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6EA6737213E83AE00598150 /* MyImageMessageTableViewCell.xib */; };
+		A6EA673C213E88D200598150 /* ImageMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EA673A213E88D200598150 /* ImageMessageTableViewCell.swift */; };
+		A6EA673D213E88D200598150 /* ImageMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6EA673B213E88D200598150 /* ImageMessageTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +60,11 @@
 		A666FD05213BDE7800B6C82B /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		A666FD09213C3AAA00B6C82B /* ImageMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessage.swift; sourceTree = "<group>"; };
 		A6EA6730213D5EE500598150 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A6EA6734213D88E800598150 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		A6EA6736213E83AE00598150 /* MyImageMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImageMessageTableViewCell.swift; sourceTree = "<group>"; };
+		A6EA6737213E83AE00598150 /* MyImageMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyImageMessageTableViewCell.xib; sourceTree = "<group>"; };
+		A6EA673A213E88D200598150 /* ImageMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageTableViewCell.swift; sourceTree = "<group>"; };
+		A6EA673B213E88D200598150 /* ImageMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageMessageTableViewCell.xib; sourceTree = "<group>"; };
 		D6C6DED77C8E0732E168E129 /* Pods-Flash Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flash Chat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flash Chat/Pods-Flash Chat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +128,10 @@
 				A666FD01213BD28900B6C82B /* MyMessageTableViewCell.swift */,
 				A666FD02213BD28900B6C82B /* MyMessageTableViewCell.xib */,
 				A666FD05213BDE7800B6C82B /* MessageCell.swift */,
+				A6EA6736213E83AE00598150 /* MyImageMessageTableViewCell.swift */,
+				A6EA6737213E83AE00598150 /* MyImageMessageTableViewCell.xib */,
+				A6EA673A213E88D200598150 /* ImageMessageTableViewCell.swift */,
+				A6EA673B213E88D200598150 /* ImageMessageTableViewCell.xib */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -130,6 +144,7 @@
 				63E28B2C1B9A337600FBF6E0 /* LogInViewController.swift */,
 				63E28B2D1B9A337600FBF6E0 /* RegisterViewController.swift */,
 				63E28B2E1B9A337600FBF6E0 /* WelcomeViewController.swift */,
+				A6EA6734213D88E800598150 /* ProfileViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -245,6 +260,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				63E28B291B9A336600FBF6E0 /* Main.storyboard in Resources */,
+				A6EA6739213E83AE00598150 /* MyImageMessageTableViewCell.xib in Resources */,
+				A6EA673D213E88D200598150 /* ImageMessageTableViewCell.xib in Resources */,
 				6321A9C31B94EBA10053D2E7 /* Images.xcassets in Resources */,
 				A6097653212C59C800937A15 /* GoogleService-Info.plist in Resources */,
 				63EBB3051D98004B004175E5 /* LaunchScreen.storyboard in Resources */,
@@ -312,10 +329,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6EA6738213E83AE00598150 /* MyImageMessageTableViewCell.swift in Sources */,
 				A6EA6731213D5EE500598150 /* User.swift in Sources */,
 				A666FD06213BDE7800B6C82B /* MessageCell.swift in Sources */,
 				63E28B331B9A337600FBF6E0 /* WelcomeViewController.swift in Sources */,
 				A666FCFE21354F8F00B6C82B /* FormItem.swift in Sources */,
+				A6EA673C213E88D200598150 /* ImageMessageTableViewCell.swift in Sources */,
+				A6EA6735213D88E800598150 /* ProfileViewController.swift in Sources */,
 				63E28B251B9A335300FBF6E0 /* Message.swift in Sources */,
 				6321A9E21B94EBE70053D2E7 /* CustomMessageCell.swift in Sources */,
 				A666FD0A213C3AAB00B6C82B /* ImageMessage.swift in Sources */,

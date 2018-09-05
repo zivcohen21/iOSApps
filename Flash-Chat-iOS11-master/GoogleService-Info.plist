@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>598961760706-61g4v9i36ohh7j5250gd7odgm9oa0uen.apps.googleusercontent.com</string>
+	<string>706387483546-svqht5l493k6da7uveiudd2inngpk3r3.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.598961760706-61g4v9i36ohh7j5250gd7odgm9oa0uen</string>
+	<string>com.googleusercontent.apps.706387483546-svqht5l493k6da7uveiudd2inngpk3r3</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBGU0t7MRcplm-n-39vce1GN1TKh7GGv1Y</string>
+	<string>AIzaSyCpwNlWqLNbpNsAu-xZj-bwe_RkuTgl1Wk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>598961760706</string>
+	<string>706387483546</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.Moveo.Flash-Chat</string>
+	<string>FlashChat</string>
 	<key>PROJECT_ID</key>
-	<string>flash-chat-f5a30</string>
+	<string>flash-chat2-23c11</string>
 	<key>STORAGE_BUCKET</key>
-	<string>flash-chat-f5a30.appspot.com</string>
+	<string>flash-chat2-23c11.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:598961760706:ios:4bd1d5657847759b</string>
+	<string>1:706387483546:ios:07346657eea4920e</string>
 	<key>DATABASE_URL</key>
-	<string>https://flash-chat-f5a30.firebaseio.com</string>
+	<string>https://flash-chat2-23c11.firebaseio.com</string>
 </dict>
 </plist>
