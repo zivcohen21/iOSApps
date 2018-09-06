@@ -73,6 +73,9 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - SDWebImage (4.4.2):
+    - SDWebImage/Core (= 4.4.2)
+  - SDWebImage/Core (4.4.2)
   - SkyFloatingLabelTextField (3.5.1)
   - SVProgressHUD (2.2.5)
 
@@ -82,6 +85,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Database
   - Firebase/Storage
+  - SDWebImage (~> 4.0)
   - SkyFloatingLabelTextField (~> 3.0)
   - SVProgressHUD
 
@@ -101,6 +105,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - SDWebImage
     - SkyFloatingLabelTextField
     - SVProgressHUD
 
@@ -119,9 +124,10 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   SkyFloatingLabelTextField: 4cbeece9c3aae97c6019d8fae511cb5b755874f7
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: fe8de206f41aebf0833765dcdddc3a720c920758
+PODFILE CHECKSUM: e5a24b75f8df2d488f0fdfd7be0205628a17eb18
 
 COCOAPODS: 1.5.3

@@ -105,10 +105,18 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     
     func textFieldValueChanged(value: String, key: String) {
         print("textFieldValueChanged")
+        print("key: \(key) value: \(value)")
         formItemsDict[key]?.value = value
-        //checkValidValue()
+        checkValidValue(key: key)
     }
-    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        print("textFieldDidEndEditing")
+
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print("textFieldDidEndEditing")
+        formItemsTableView.reloadData()
+    }
     
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return formItemsDict.count
@@ -130,7 +138,10 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
 
         validData = true
         
-        checkValidValue()
+        for key in keys {
+            checkValidValue(key: key)
+        }
+        
         formItemsTableView.reloadData()
         
         if validData {
@@ -184,19 +195,34 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    func checkValidValue() {
+    func checkValidValue(key: String) {
         
-        formItemsDict[emailKey]?.checkEmail()
+        let item = formItemsDict[key]
+    
+        item?.checkValidity()
         
-        formItemsDict[passwordKey]?.checkPassword()
-        
-        for (_ , item) in formItemsDict {
-            
-            item.checkValidity()
-            if !item.isValid {
-                 validData = false
-            }
+        if key == emailKey {
+            item?.checkEmail()
         }
+            
+        else if key == passwordKey {
+            item?.checkPassword()
+        }
+        
+        if !(item?.isValid)! {
+            validData = false
+        }
+        
+        print("self.isValid \(item?.isValid)")
+        print("self.errorMessage \(item?.errorMessage)")
+
+//        for (_ , item) in formItemsDict {
+//
+//            item.checkValidity()
+//            if !item.isValid {
+//                 validData = false
+//            }
+//        }
     }
     
     @IBAction func uploadImage(_ sender: Any) {
@@ -224,40 +250,50 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     
     func saveDetails() {
         print("saveImage")
-        if let imageData = UIImageJPEGRepresentation(image_data!, 0.1) {
-            imageRef.putData(imageData, metadata: nil) {
-                (metadata, error) in
-                if error != nil {
-                    print(error!)
-                    print("error1")
-                }
-                else {
-                    self.imageRef.downloadURL {
-                        url, error in
-                        guard error == nil else {return}
-                        guard let urlString = url?.absoluteString else {return}
-                        print(self.dictToSave)
-                        self.dictToSave["imageURL"] = urlString
-                        
-                        self.userDetailsDB.childByAutoId().setValue(self.dictToSave) {
-                            (error, reference) in
-                            if error != nil {
-                                print(error!)
-                            }
-                            else {
-                                print("Details saved successfully!")
-                                self.performSegue(withIdentifier: "goToChat", sender: self)
-                                for (_ , item) in self.formItemsDict {
-                                    
-                                    item.value = ""
-                                }
-                            }
-                            SVProgressHUD.dismiss()
-                            self.changeUserInteraction(isEnable: true)
+        if image_data != nil {
+            if let imageData = UIImageJPEGRepresentation(image_data!, 0.1) {
+                imageRef.putData(imageData, metadata: nil) {
+                    (metadata, error) in
+                    if error != nil {
+                        print(error!)
+                        print("error1")
+                    }
+                    else {
+                        self.imageRef.downloadURL {
+                            url, error in
+                            guard error == nil else {return}
+                            guard let urlString = url?.absoluteString else {return}
+                            print(self.dictToSave)
+                            self.dictToSave["imageURL"] = urlString
+                            
+                            self.saveDetailsAndGoToChat()
                         }
                     }
                 }
             }
+        }
+        else {
+            self.saveDetailsAndGoToChat()
+        }
+    }
+    
+    func saveDetailsAndGoToChat()
+    {
+        self.userDetailsDB.childByAutoId().setValue(self.dictToSave) {
+            (error, reference) in
+            if error != nil {
+                print(error!)
+            }
+            else {
+                print("Details saved successfully!")
+                self.performSegue(withIdentifier: "goToChat", sender: self)
+                for (_ , item) in self.formItemsDict {
+                    
+                    item.value = ""
+                }
+            }
+            SVProgressHUD.dismiss()
+            self.changeUserInteraction(isEnable: true)
         }
     }
 }

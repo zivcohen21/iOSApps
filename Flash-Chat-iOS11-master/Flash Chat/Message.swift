@@ -13,10 +13,10 @@ class Message {
     var messageBody : String = ""
     var messageDate: String = ""
     var isImage : Bool = false
-    var profileImage : UIImage!
+    var profileImage : String
     var email : String
     
-    init(sender : String, email : String, messageBody : String, messageDate : String, isImage : Bool, profileImage : UIImage) {
+    init(sender : String, email : String, messageBody : String, messageDate : String, isImage : Bool, profileImage : String) {
         self.sender = sender
         self.email = email
         self.messageBody = messageBody

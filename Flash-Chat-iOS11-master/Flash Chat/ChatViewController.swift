@@ -11,6 +11,7 @@ import Firebase
 import ChameleonFramework
 import FirebaseStorage
 import SVProgressHUD
+import SDWebImage
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -41,7 +42,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         //TODO: Set yourself as the delegate of the text field here:
         messageTextfield.delegate = self
         
-        
         //TODO: Set the tapGesture here:
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         messageTableView.addGestureRecognizer(tapGesture)
@@ -61,8 +61,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
-                                               name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+
     }
 
     //TODO: Declare cellForRowAtIndexPath here:
@@ -74,7 +74,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             if messageArray[indexPath.row].isImage {
                 print(messageArray[indexPath.row].messageDate)
                 cell = tableView.dequeueReusableCell(withIdentifier: "myImageMessageTableViewCell", for: indexPath) as! MyImageMessageTableViewCell
-                (cell as! MyImageMessageTableViewCell).sendImageView.image = (messageArray[indexPath.row] as! ImageMessage).imageToSend
+                (cell as! MyImageMessageTableViewCell).sendImageView.sd_setImage(with: URL(string: messageArray[indexPath.row].messageBody), placeholderImage: UIImage(named: "placeholder.png"))
             }
             else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "myMessageTableViewCell", for: indexPath) as! MyMessageTableViewCell
@@ -87,7 +87,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         else {
             if messageArray[indexPath.row].isImage {
                 cell = tableView.dequeueReusableCell(withIdentifier: "imageMessageTableViewCell", for: indexPath) as! ImageMessageTableViewCell
-                (cell as! ImageMessageTableViewCell).sendImageView.image = (messageArray[indexPath.row] as! ImageMessage).imageToSend
+                (cell as! ImageMessageTableViewCell).sendImageView.sd_setImage(with: URL(string: messageArray[indexPath.row].messageBody), placeholderImage: UIImage(named: "placeholder.png"))
             }
             else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "customMessageCell", for: indexPath) as! CustomMessageCell
@@ -100,8 +100,16 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.senderUsername.text = messageArray[indexPath.row].sender
         cell.messageDate.text = messageArray[indexPath.row].messageDate
-        cell.avatarImageView.image = messageArray[indexPath.row].profileImage
+        let profileImageUrl = messageArray[indexPath.row].profileImage
+        if profileImageUrl.count > 0
+        {
+            cell.avatarImageView.sd_setImage(with: URL(string: profileImageUrl), placeholderImage: UIImage(named: "placeholder.png"))
+        }
+        else {
+            cell.avatarImageView.image = UIImage(named: "egg")
+        }
         
+
         return cell
     }
     
@@ -129,7 +137,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func getAllProfileImages() {
         
-        var image = UIImage(named: "egg")
+        
         
         let userDetails = Database.database().reference().child("userDetails")
         
@@ -143,35 +151,44 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 let valueDict = value as! Dictionary<String, String>
                 let imageURL = valueDict["imageURL"]
-                let storageRef = Storage.storage().reference(forURL: imageURL as! String)
-                storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                    
-                    if let error = error {
-                        print(error)
-                    } else {
-                        if let imageData = data {
-                            image = UIImage(data: imageData)
-                        }
-                    }
-                    
-                    let user = User()
-                    user.name = valueDict["name"]!
-                    user.email = valueDict["email"]!
-                    user.country = valueDict["country"]!
-                    user.city = valueDict["city"]!
-                    user.street = valueDict["street"]!
-                    user.phone = valueDict["phone"]!
-                    user.profileImage = image
-                    self.allUsers[user.email] = user
-                    index += 1
-                    if index == snapshotValue.count {
-                        self.retrieveMessages()
-                    }
+                if imageURL != nil {
+//                    let storageRef = Storage.storage().reference(forURL: imageURL as! String)
+//                    storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+//
+//                        if let error = error {
+//                            print(error)
+//                        } else {
+//                            if let imageData = data {
+//                                image = UIImage(data: imageData)
+//                            }
+//                        }
+                        index += 1
+                        self.saveUser(index, imageURL!, valueDict, snapshotValue)
+                    //}
+                }
+                else {
+                     index += 1
+                    self.saveUser(index, "", valueDict, snapshotValue)
                 }
             }
-            
-            
         })
+    }
+    
+    func saveUser(_ index : Int, _ imageURL : String, _  valueDict : [String : String], _ snapshotValue : Dictionary<String, Any>) {
+        
+        let user = User()
+        user.name = valueDict["name"]!
+        user.email = valueDict["email"]!
+        user.country = valueDict["country"]!
+        user.city = valueDict["city"]!
+        user.street = valueDict["street"]!
+        user.phone = valueDict["phone"]!
+        user.profileImage = imageURL
+        self.allUsers[user.email] = user
+        
+        if index == snapshotValue.count {
+            self.retrieveMessages()
+        }
     }
     
     @objc func keyboardWillShow(notification: Notification) {
@@ -185,6 +202,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             print(self.heightConstraint.constant)
             self.view.layoutIfNeeded()
         })
+        
+        messageTableView.scrollToBottom()
     }
     
     ///////////////////////////////////////////
@@ -204,6 +223,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //TODO: Create the retrieveMessages method here:
     func retrieveMessages() {
+
         print("retrieveMessages")
         let messageDB = Database.database().reference().child("Messages")
         messageDB.observeSingleEvent(of: .value, with: {
@@ -211,7 +231,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             if snapshot.exists() {
                 let snapshotValue = snapshot.value as! Dictionary<String, Any>
                 for(_ ,value) in snapshotValue {
-                    print("snapshotValue")
                     let valueDict = value as! Dictionary<String, Any>
                     let text = valueDict["MessageBody"] as! String?
                     let sender = (valueDict["Sender"] as! String?)!
@@ -222,8 +241,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.initMessage(text!, isImage, messageDate!, sender, email)
                     self.messageTableView.reloadData()
                 }
+                self.sortMessages()
             }
-            
+            self.messageTableView.reloadData()
+            self.messageTableView.scrollToBottom()
         })
 
         self.configureTableView()
@@ -242,7 +263,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    
     @IBAction func uploadImageButton(_ sender: Any) {
         let myPickerController = UIImagePickerController()
         myPickerController.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
@@ -252,9 +272,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM HH:mm"
-        let dateNow = formatter.string(from: Date())
+        let dateNow = getDateNow()
         let imageName = "profileImage-\(dateNow)"
         let image_data = info[UIImagePickerControllerOriginalImage] as? UIImage
         self.dismiss(animated: true, completion: nil)
@@ -312,6 +330,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.initMessage(messageText, isImage, dateNow, sender!, email)
                 
                 self.messageTableView.reloadData()
+                self.messageTableView.scrollToBottom()
                 print("Message saved successfully!")
                 
                 self.messageTextfield.isEnabled = true
@@ -319,6 +338,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.messageTextfield.text = ""
             }
         }
+    }
+    
+    func sortMessages() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM HH:mm:ss"
+        messageArray = messageArray.sorted(by: { formatter.date(from: $0.messageDate)! <  formatter.date(from: $1.messageDate)!})
     }
     
     func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -333,34 +358,38 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     func initMessage(_ messageText: String, _ isImage: Bool, _ dateNow: String, _ sender: String, _ email: String) {
         
         print("initMessage")
-        if isImage
-        {
-            let storageRef = Storage.storage().reference(forURL: messageText)
-            storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                if let error = error {
-                    print(error)
-                } else {
-                    if let imageData = data {
-                        
-                        let imageMessage = ImageMessage(sender: sender, email: email, messageBody: "", messageDate: dateNow, isImage: isImage, profileImage: (self.allUsers[email]?.profileImage)!, imageToSend: UIImage(data: imageData)!)
-                        self.messageArray.append(imageMessage)
-                        print("3 \(imageMessage.imageToSend!.size)")
-                        self.messageTableView.reloadData()
-                    }
-                }
-            }
-
-        }
-        else {
-            let message = Message(sender: sender, email: email, messageBody: messageText, messageDate: dateNow, isImage: isImage, profileImage: (self.allUsers[email]?.profileImage)!)
-            self.messageArray.append(message)
-        }
+//        if isImage
+//        {
+//            let storageRef = Storage.storage().reference(forURL: messageText)
+//            storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+//                if let error = error {
+//                    print(error)
+//                }
+//                else {
+//                    //if let imageData = data {
+//                let imageMessage = ImageMessage(sender: sender, email: email, messageBody: messageText, messageDate: dateNow, isImage: isImage, profileImage: (self.allUsers[email]?.profileImage)!)
+//                self.messageArray.append(imageMessage)
+//                print("3 \(imageMessage.imageToSend!.size)")
+//                self.messageTableView.reloadData()
+//
+//                self.messageTableView.scrollToBottom()
+//                   // }
+//                //}
+//            //}
+//
+//        }
+        //else {
+        let message = Message(sender: sender, email: email, messageBody: messageText, messageDate: dateNow, isImage: isImage, profileImage: (self.allUsers[email]?.profileImage)!)
+        self.messageArray.append(message)
         
+        self.messageTableView.reloadData()
+        self.messageTableView.scrollToBottom()
+        //}
     }
     
     func getDateNow() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM HH:mm"
+        formatter.dateFormat = "dd-MM HH:mm:ss"
         return formatter.string(from: Date())
     }
     
@@ -372,4 +401,28 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         })
     }
 
+}
+
+extension UITableView {
+    
+    func scrollToBottom(){
+        
+        DispatchQueue.main.async {
+            let rows = self.numberOfRows(inSection:  self.numberOfSections - 1) - 1
+            //if rows > 0 {
+                let indexPath = IndexPath(
+                    row: rows,
+                    section: self.numberOfSections - 1)
+                self.scrollToRow(at: indexPath, at: .bottom, animated: true)
+           // }
+        }
+    }
+    
+    func scrollToTop() {
+        
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: 0, section: 0)
+            self.scrollToRow(at: indexPath, at: .top, animated: false)
+        }
+    }
 }

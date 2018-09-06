@@ -13,6 +13,7 @@ pod 'Firebase/Storage'
 pod 'SVProgressHUD'
 pod 'ChameleonFramework'
 pod 'SkyFloatingLabelTextField', '~> 3.0'
+pod 'SDWebImage', '~> 4.0'
 
 end
 
