@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myMessageTableViewCell" rowHeight="110" id="KGk-i7-Jjw" customClass="MyMessageTableViewCell" customModule="Flash_Chat" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
+                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MEh-Kc-KV4" userLabel="Avatar Image View">
+                        <rect key="frame" x="267" y="10" width="53" height="53"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="53" id="Js8-WV-STq"/>
+                            <constraint firstAttribute="width" constant="53" id="Sc5-b6-PYk"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="GTZ-ff-dLT" userLabel="Message Background">
+                        <rect key="frame" x="35" y="10" width="226" height="89.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ydk-L9-e7o" userLabel="Sender Username">
+                                <rect key="frame" x="15" y="10" width="211" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30-08 16:23" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sXV-Dt-qL6" userLabel="Message Date">
+                                <rect key="frame" x="15" y="62.5" width="75" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="Eec-jb-S3e"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="trhthtrhrthththththrththth" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emt-6F-vIt" userLabel="Message Body">
+                                <rect key="frame" x="15" y="32" width="196" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="AoR-rZ-OUZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.99997437" blue="0.99999129769999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1819814891" green="0.69426733259999995" blue="0.53024792669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Ydk-L9-e7o" secondAttribute="trailing" id="0dX-50-T9g"/>
+                            <constraint firstItem="Ydk-L9-e7o" firstAttribute="leading" secondItem="GTZ-ff-dLT" secondAttribute="leading" constant="15" id="10e-X2-DBB"/>
+                            <constraint firstItem="Ydk-L9-e7o" firstAttribute="top" secondItem="GTZ-ff-dLT" secondAttribute="top" constant="10" id="5ck-wB-45u"/>
+                            <constraint firstAttribute="bottom" secondItem="sXV-Dt-qL6" secondAttribute="bottom" constant="10" id="AFh-a9-zRS"/>
+                            <constraint firstItem="sXV-Dt-qL6" firstAttribute="leading" secondItem="GTZ-ff-dLT" secondAttribute="leading" constant="15" id="RAH-Jw-r9e"/>
+                            <constraint firstAttribute="width" secondItem="emt-6F-vIt" secondAttribute="width" constant="30" id="Xf8-Tj-fZI"/>
+                            <constraint firstItem="sXV-Dt-qL6" firstAttribute="top" secondItem="emt-6F-vIt" secondAttribute="bottom" constant="10" id="Xwj-6n-34Y"/>
+                            <constraint firstItem="emt-6F-vIt" firstAttribute="top" secondItem="Ydk-L9-e7o" secondAttribute="bottom" constant="5" id="ZDN-zP-fgV"/>
+                            <constraint firstItem="emt-6F-vIt" firstAttribute="leading" secondItem="GTZ-ff-dLT" secondAttribute="leading" constant="15" id="rWE-cU-hUJ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="MEh-Kc-KV4" firstAttribute="leading" secondItem="GTZ-ff-dLT" secondAttribute="trailing" constant="6" id="KOf-f2-8Vd"/>
+                    <constraint firstAttribute="trailing" secondItem="MEh-Kc-KV4" secondAttribute="trailing" id="MzA-eu-LH5"/>
+                    <constraint firstItem="MEh-Kc-KV4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="QeK-a5-xOH"/>
+                    <constraint firstItem="GTZ-ff-dLT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="RyP-hC-AyV"/>
+                    <constraint firstItem="GTZ-ff-dLT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="XEY-m7-NSW"/>
+                    <constraint firstAttribute="bottom" secondItem="GTZ-ff-dLT" secondAttribute="bottom" constant="10" id="gMb-ya-kEi"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarImageView" destination="MEh-Kc-KV4" id="UVQ-Zv-IA3"/>
+                <outlet property="messageBackground" destination="GTZ-ff-dLT" id="fWm-TG-CEt"/>
+                <outlet property="messageBody" destination="emt-6F-vIt" id="pb5-BH-kty"/>
+                <outlet property="messageDate" destination="sXV-Dt-qL6" id="x9U-iB-T2K"/>
+                <outlet property="senderUsername" destination="Ydk-L9-e7o" id="YT3-h3-DbQ"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="53.5"/>
+        </tableViewCell>
+    </objects>
+</document>
