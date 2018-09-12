@@ -28,6 +28,9 @@
 		A666FD06213BDE7800B6C82B /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A666FD05213BDE7800B6C82B /* MessageCell.swift */; };
 		A666FD0A213C3AAB00B6C82B /* ImageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A666FD09213C3AAA00B6C82B /* ImageMessage.swift */; };
 		A6DCD04D214924AA008CDED6 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DCD04C214924AA008CDED6 /* ChatViewModel.swift */; };
+		A6DCD05021493496008CDED6 /* tableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DCD04F21493496008CDED6 /* tableViewExtension.swift */; };
+		A6DCD0522149434D008CDED6 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DCD0512149434D008CDED6 /* RegisterViewModel.swift */; };
+		A6DCD05621495392008CDED6 /* DatesUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DCD05521495392008CDED6 /* DatesUtils.swift */; };
 		A6EA6731213D5EE500598150 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EA6730213D5EE500598150 /* User.swift */; };
 		A6EA6735213D88E800598150 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EA6734213D88E800598150 /* ProfileViewController.swift */; };
 		A6EA6738213E83AE00598150 /* MyImageMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EA6736213E83AE00598150 /* MyImageMessageTableViewCell.swift */; };
@@ -61,6 +64,9 @@
 		A666FD05213BDE7800B6C82B /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		A666FD09213C3AAA00B6C82B /* ImageMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessage.swift; sourceTree = "<group>"; };
 		A6DCD04C214924AA008CDED6 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		A6DCD04F21493496008CDED6 /* tableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tableViewExtension.swift; sourceTree = "<group>"; };
+		A6DCD0512149434D008CDED6 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		A6DCD05521495392008CDED6 /* DatesUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesUtils.swift; sourceTree = "<group>"; };
 		A6EA6730213D5EE500598150 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A6EA6734213D88E800598150 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A6EA6736213E83AE00598150 /* MyImageMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImageMessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -103,6 +109,7 @@
 		6321A9B81B94EBA10053D2E7 /* Flash Chat */ = {
 			isa = PBXGroup;
 			children = (
+				A6DCD04E21493476008CDED6 /* Extensions */,
 				A666FCF8213549A400B6C82B /* Custom FormItem */,
 				6321A9EE1B94EC360053D2E7 /* Model */,
 				6321A9EB1B94EC170053D2E7 /* View */,
@@ -148,6 +155,8 @@
 				63E28B2D1B9A337600FBF6E0 /* RegisterViewController.swift */,
 				63E28B2E1B9A337600FBF6E0 /* WelcomeViewController.swift */,
 				A6EA6734213D88E800598150 /* ProfileViewController.swift */,
+				A6DCD0512149434D008CDED6 /* RegisterViewModel.swift */,
+				A6DCD05521495392008CDED6 /* DatesUtils.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -189,6 +198,14 @@
 				A666FCFA21354A3200B6C82B /* FormItemTableViewCell.xib */,
 			);
 			name = "Custom FormItem";
+			sourceTree = "<group>";
+		};
+		A6DCD04E21493476008CDED6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A6DCD04F21493496008CDED6 /* tableViewExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		C29BEC3B667BB55F63293AFD /* Frameworks */ = {
@@ -339,10 +356,13 @@
 				A666FD06213BDE7800B6C82B /* MessageCell.swift in Sources */,
 				63E28B331B9A337600FBF6E0 /* WelcomeViewController.swift in Sources */,
 				A666FCFE21354F8F00B6C82B /* FormItem.swift in Sources */,
+				A6DCD05021493496008CDED6 /* tableViewExtension.swift in Sources */,
 				A6EA673C213E88D200598150 /* ImageMessageTableViewCell.swift in Sources */,
 				A6DCD04D214924AA008CDED6 /* ChatViewModel.swift in Sources */,
+				A6DCD0522149434D008CDED6 /* RegisterViewModel.swift in Sources */,
 				A6EA6735213D88E800598150 /* ProfileViewController.swift in Sources */,
 				63E28B251B9A335300FBF6E0 /* Message.swift in Sources */,
+				A6DCD05621495392008CDED6 /* DatesUtils.swift in Sources */,
 				6321A9E21B94EBE70053D2E7 /* CustomMessageCell.swift in Sources */,
 				A666FD0A213C3AAB00B6C82B /* ImageMessage.swift in Sources */,
 				63E28B321B9A337600FBF6E0 /* RegisterViewController.swift in Sources */,

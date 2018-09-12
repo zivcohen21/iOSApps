@@ -12,7 +12,6 @@ import SVProgressHUD
 
 class LogInViewController: UIViewController {
 
-    //Textfields pre-linked with IBOutlets
     @IBOutlet var emailTextfield: UITextField!
     @IBOutlet var passwordTextfield: UITextField!
     @IBOutlet weak var logInButton: UIButton!
@@ -21,11 +20,7 @@ class LogInViewController: UIViewController {
         super.viewDidLoad()
         passwordTextfield.isSecureTextEntry = true
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
+    
     @IBAction func logInPressed(_ sender: AnyObject) {
 
         changeUserInteraction(isEnable: false)
@@ -41,11 +36,12 @@ class LogInViewController: UIViewController {
             } else {
                 print("Log in Successful!")
                 self.performSegue(withIdentifier: "goToChat", sender: self)
+                self.emailTextfield.text = ""
+                self.passwordTextfield.text = ""
             }
             SVProgressHUD.dismiss()
             self.changeUserInteraction(isEnable: true)
         }
-
     }
     
     func changeUserInteraction(isEnable: Bool) {
@@ -54,7 +50,4 @@ class LogInViewController: UIViewController {
         emailTextfield.isUserInteractionEnabled = isEnable
         passwordTextfield.isUserInteractionEnabled = isEnable
     }
-
-
-    
 }  
