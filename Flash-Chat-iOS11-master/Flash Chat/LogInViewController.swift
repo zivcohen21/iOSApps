@@ -26,7 +26,6 @@ class LogInViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-   
     @IBAction func logInPressed(_ sender: AnyObject) {
 
         changeUserInteraction(isEnable: false)

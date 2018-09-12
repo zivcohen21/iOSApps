@@ -265,7 +265,7 @@
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS" userLabel="Background">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7eI-kw-TVm" userLabel="Message Table View">
                                 <rect key="frame" x="5" y="64" width="365" height="553"/>
@@ -336,7 +336,7 @@
                         <constraints>
                             <constraint firstItem="WpY-IA-acB" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="893-Zp-giU"/>
                             <constraint firstItem="7eI-kw-TVm" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="AAq-UW-DJb"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="WpY-IA-acB" secondAttribute="bottom" id="DDc-aL-BrB"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="WpY-IA-acB" secondAttribute="bottom" id="Dvf-nl-690"/>
                             <constraint firstItem="7eI-kw-TVm" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="5" id="Hlv-uC-xq8"/>
                             <constraint firstItem="WpY-IA-acB" firstAttribute="top" secondItem="7eI-kw-TVm" secondAttribute="bottom" id="mY4-TT-Oje"/>
                             <constraint firstAttribute="trailing" secondItem="WpY-IA-acB" secondAttribute="trailing" id="sS0-jJ-zn7"/>

@@ -99,7 +99,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         cell.senderUsername.text = messageArray[indexPath.row].sender
-        cell.messageDate.text = messageArray[indexPath.row].messageDate
+        cell.messageDate.text = getDateAsStringWithoutSec(messageArray[indexPath.row].messageDate)
         let profileImageUrl = messageArray[indexPath.row].profileImage
         if profileImageUrl.count > 0
         {
@@ -136,9 +136,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func getAllProfileImages() {
-        
-        
-        
+       
         let userDetails = Database.database().reference().child("userDetails")
         
         userDetails.observeSingleEvent(of: .value, with: {
@@ -196,9 +194,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
         let keyboardRectangle = keyboardFrame.cgRectValue
         let keyboardHeight = Float(keyboardRectangle.height)
-
+        
         UIView.animate(withDuration: 0.5, animations: {
-            self.heightConstraint.constant = CGFloat(keyboardHeight) + self.messageFieldViewHeight
+            if #available(iOS 11.0, *) {
+                self.heightConstraint.constant = CGFloat(keyboardHeight) + self.messageFieldViewHeight - self.view.safeAreaInsets.bottom
+            }
+            else {
+                 self.heightConstraint.constant = CGFloat(keyboardHeight) + self.messageFieldViewHeight
+            }
             print(self.heightConstraint.constant)
             self.view.layoutIfNeeded()
         })
@@ -346,6 +349,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageArray = messageArray.sorted(by: { formatter.date(from: $0.messageDate)! <  formatter.date(from: $1.messageDate)!})
     }
     
+    
+    
     func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "goToProfilePage",
             let destination = segue.destination as? ProfileViewController,
@@ -358,39 +363,34 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     func initMessage(_ messageText: String, _ isImage: Bool, _ dateNow: String, _ sender: String, _ email: String) {
         
         print("initMessage")
-//        if isImage
-//        {
-//            let storageRef = Storage.storage().reference(forURL: messageText)
-//            storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-//                if let error = error {
-//                    print(error)
-//                }
-//                else {
-//                    //if let imageData = data {
-//                let imageMessage = ImageMessage(sender: sender, email: email, messageBody: messageText, messageDate: dateNow, isImage: isImage, profileImage: (self.allUsers[email]?.profileImage)!)
-//                self.messageArray.append(imageMessage)
-//                print("3 \(imageMessage.imageToSend!.size)")
-//                self.messageTableView.reloadData()
-//
-//                self.messageTableView.scrollToBottom()
-//                   // }
-//                //}
-//            //}
-//
-//        }
-        //else {
+
         let message = Message(sender: sender, email: email, messageBody: messageText, messageDate: dateNow, isImage: isImage, profileImage: (self.allUsers[email]?.profileImage)!)
         self.messageArray.append(message)
         
         self.messageTableView.reloadData()
         self.messageTableView.scrollToBottom()
-        //}
     }
     
     func getDateNow() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM HH:mm:ss"
         return formatter.string(from: Date())
+    }
+    
+    func convertDateToString(_ date: Date, format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: date)
+    }
+    
+    func convertStringToDate (_ dateAsString: String, format: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.date(from: dateAsString)!
+    }
+    
+    func getDateAsStringWithoutSec(_ theDate: String) -> String {
+        return convertDateToString(convertStringToDate(theDate, format: "dd-MM HH:mm:ss"), format: "dd-MM HH:mm")
     }
     
     func removeKeyboard() {
@@ -409,12 +409,12 @@ extension UITableView {
         
         DispatchQueue.main.async {
             let rows = self.numberOfRows(inSection:  self.numberOfSections - 1) - 1
-            //if rows > 0 {
+            if rows > 0 {
                 let indexPath = IndexPath(
                     row: rows,
                     section: self.numberOfSections - 1)
                 self.scrollToRow(at: indexPath, at: .bottom, animated: true)
-           // }
+            }
         }
     }
     

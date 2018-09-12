@@ -11,7 +11,7 @@ import FirebaseStorage
 import SVProgressHUD
 
 class RegisterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, formTableViewCellDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+
     @IBOutlet var generalView: UIView!
     @IBOutlet weak var formItemsTableView: UITableView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
@@ -109,13 +109,10 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         formItemsDict[key]?.value = value
         checkValidValue(key: key)
     }
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-        print("textFieldDidEndEditing")
-
-    }
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        print("textFieldDidEndEditing")
-        formItemsTableView.reloadData()
+    
+    func textFieldEndEditing(value: String, key: String) {
+        print("textFieldEndEditing: \(formItemsDict[key]?.errorMessage)")
+        
     }
     
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -205,7 +202,7 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
             item?.checkEmail()
         }
             
-        else if key == passwordKey {
+        else if key == passwordKey || key == vPasswordKey {
             item?.checkPassword()
         }
         
