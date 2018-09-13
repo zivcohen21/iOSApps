@@ -18,18 +18,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LmH-nZ-XSA">
-                        <rect key="frame" x="0.0" y="10" width="53" height="53"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="53" id="PVk-h0-lvC"/>
-                            <constraint firstAttribute="height" constant="53" id="jTr-Lq-Ewu"/>
-                        </constraints>
-                    </imageView>
                     <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="xcV-g2-eVs" userLabel="Message Background">
                         <rect key="frame" x="59" y="10" width="150" height="179.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9I-kD-HOl">
-                                <rect key="frame" x="9" y="0.0" width="141" height="17"/>
+                                <rect key="frame" x="15" y="10" width="135" height="14"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -43,14 +36,25 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7bB-W1-aQ7" userLabel="Send Image View">
+                                <rect key="frame" x="15" y="29" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="VzP-QY-vFH"/>
+                                    <constraint firstAttribute="width" constant="120" id="jex-bo-E18"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.1819814891" green="0.69426733259999995" blue="0.53024792669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="7bB-W1-aQ7" firstAttribute="centerY" secondItem="xcV-g2-eVs" secondAttribute="centerY" id="76g-R6-fB7"/>
+                            <constraint firstItem="7bB-W1-aQ7" firstAttribute="centerX" secondItem="xcV-g2-eVs" secondAttribute="centerX" id="9BI-vB-Iak"/>
                             <constraint firstItem="GSz-7E-Uia" firstAttribute="leading" secondItem="xcV-g2-eVs" secondAttribute="leading" constant="8" id="CN8-XN-x1h"/>
                             <constraint firstAttribute="bottom" secondItem="GSz-7E-Uia" secondAttribute="bottom" constant="5" id="Cyv-gw-5kH"/>
-                            <constraint firstItem="C9I-kD-HOl" firstAttribute="top" secondItem="xcV-g2-eVs" secondAttribute="top" id="PBw-QN-6cG"/>
                             <constraint firstAttribute="trailing" secondItem="C9I-kD-HOl" secondAttribute="trailing" id="SXq-tf-wlY"/>
-                            <constraint firstItem="C9I-kD-HOl" firstAttribute="leading" secondItem="xcV-g2-eVs" secondAttribute="leading" constant="9" id="xLc-Ec-Lkg"/>
+                            <constraint firstAttribute="width" secondItem="7bB-W1-aQ7" secondAttribute="width" constant="30" id="Vjv-ZG-bNh"/>
+                            <constraint firstItem="7bB-W1-aQ7" firstAttribute="top" secondItem="C9I-kD-HOl" secondAttribute="bottom" constant="5" id="kED-DZ-rGs"/>
+                            <constraint firstItem="C9I-kD-HOl" firstAttribute="top" secondItem="xcV-g2-eVs" secondAttribute="top" constant="10" id="nz8-Ng-FhE"/>
+                            <constraint firstItem="C9I-kD-HOl" firstAttribute="leading" secondItem="xcV-g2-eVs" secondAttribute="leading" constant="15" id="xLc-Ec-Lkg"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -59,31 +63,31 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7bB-W1-aQ7" userLabel="Send Image View">
-                        <rect key="frame" x="74" y="40" width="120" height="120"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xbp-mH-r51">
+                        <rect key="frame" x="0.0" y="10" width="53" height="53"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="120" id="VzP-QY-vFH"/>
-                            <constraint firstAttribute="width" constant="120" id="jex-bo-E18"/>
+                            <constraint firstAttribute="height" constant="53" id="Lf2-uX-dyl"/>
+                            <constraint firstAttribute="width" constant="53" id="Ztt-82-aVS"/>
                         </constraints>
-                    </imageView>
+                        <connections>
+                            <action selector="profilePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uU2-ap-srp"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="xcV-g2-eVs" firstAttribute="leading" secondItem="LmH-nZ-XSA" secondAttribute="trailing" constant="6" id="049-nK-3xT"/>
+                    <constraint firstItem="Xbp-mH-r51" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="8sq-R1-j1p"/>
+                    <constraint firstItem="xcV-g2-eVs" firstAttribute="leading" secondItem="Xbp-mH-r51" secondAttribute="trailing" constant="6" id="AcM-9R-ZeF"/>
+                    <constraint firstItem="Xbp-mH-r51" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="BJQ-3q-4b5"/>
                     <constraint firstItem="xcV-g2-eVs" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="LHC-2C-r6I"/>
-                    <constraint firstItem="7bB-W1-aQ7" firstAttribute="centerX" secondItem="xcV-g2-eVs" secondAttribute="centerX" id="aRW-kg-ZLw"/>
-                    <constraint firstItem="xcV-g2-eVs" firstAttribute="width" secondItem="7bB-W1-aQ7" secondAttribute="width" constant="30" id="bQx-yW-boE"/>
+                    <constraint firstAttribute="bottom" secondItem="Xbp-mH-r51" secondAttribute="bottom" constant="136.5" id="Xie-le-eh3"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xcV-g2-eVs" secondAttribute="trailing" constant="10" id="bWJ-1v-bY6"/>
-                    <constraint firstItem="LmH-nZ-XSA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="h9L-YY-1f6"/>
-                    <constraint firstAttribute="bottom" secondItem="LmH-nZ-XSA" secondAttribute="bottom" constant="136.5" id="htY-Go-DEN"/>
-                    <constraint firstItem="7bB-W1-aQ7" firstAttribute="centerY" secondItem="xcV-g2-eVs" secondAttribute="centerY" id="j55-sP-fJ3"/>
                     <constraint firstAttribute="bottom" secondItem="xcV-g2-eVs" secondAttribute="bottom" constant="10" id="nTS-MS-odd"/>
-                    <constraint firstItem="LmH-nZ-XSA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="tmg-VP-vr0"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="avatarImageView" destination="LmH-nZ-XSA" id="ESM-aK-Ggp"/>
                 <outlet property="messageBackground" destination="xcV-g2-eVs" id="Z2U-3j-Gj2"/>
                 <outlet property="messageDate" destination="GSz-7E-Uia" id="3p7-l7-UWE"/>
+                <outlet property="profilePicButton" destination="Xbp-mH-r51" id="dEi-zJ-Qxk"/>
                 <outlet property="sendImageView" destination="7bB-W1-aQ7" id="r9n-vp-jnm"/>
                 <outlet property="senderUsername" destination="C9I-kD-HOl" id="zLA-Fw-E3h"/>
             </connections>

@@ -18,13 +18,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MEh-Kc-KV4" userLabel="Avatar Image View">
-                        <rect key="frame" x="267" y="10" width="53" height="53"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="53" id="Js8-WV-STq"/>
-                            <constraint firstAttribute="width" constant="53" id="Sc5-b6-PYk"/>
-                        </constraints>
-                    </imageView>
                     <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="GTZ-ff-dLT" userLabel="Message Background">
                         <rect key="frame" x="35" y="10" width="226" height="89.5"/>
                         <subviews>
@@ -72,21 +65,32 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cap-8E-rL1">
+                        <rect key="frame" x="267" y="10" width="53" height="53"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="53" id="4uR-I1-to0"/>
+                            <constraint firstAttribute="height" constant="53" id="nRh-Eg-cXI"/>
+                        </constraints>
+                        <connections>
+                            <action selector="profilePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="TQW-hl-327"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="MEh-Kc-KV4" firstAttribute="leading" secondItem="GTZ-ff-dLT" secondAttribute="trailing" constant="6" id="KOf-f2-8Vd"/>
-                    <constraint firstAttribute="trailing" secondItem="MEh-Kc-KV4" secondAttribute="trailing" id="MzA-eu-LH5"/>
-                    <constraint firstItem="MEh-Kc-KV4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="QeK-a5-xOH"/>
+                    <constraint firstAttribute="bottom" secondItem="cap-8E-rL1" secondAttribute="bottom" constant="47" id="HMB-tQ-Ja6"/>
                     <constraint firstItem="GTZ-ff-dLT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="RyP-hC-AyV"/>
                     <constraint firstItem="GTZ-ff-dLT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="XEY-m7-NSW"/>
                     <constraint firstAttribute="bottom" secondItem="GTZ-ff-dLT" secondAttribute="bottom" constant="10" id="gMb-ya-kEi"/>
+                    <constraint firstItem="cap-8E-rL1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="p73-z3-xgm"/>
+                    <constraint firstItem="cap-8E-rL1" firstAttribute="leading" secondItem="GTZ-ff-dLT" secondAttribute="trailing" constant="6" id="vfS-cq-HWY"/>
+                    <constraint firstAttribute="trailing" secondItem="cap-8E-rL1" secondAttribute="trailing" id="vtT-Qe-kmV"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="avatarImageView" destination="MEh-Kc-KV4" id="UVQ-Zv-IA3"/>
                 <outlet property="messageBackground" destination="GTZ-ff-dLT" id="fWm-TG-CEt"/>
                 <outlet property="messageBody" destination="emt-6F-vIt" id="pb5-BH-kty"/>
                 <outlet property="messageDate" destination="sXV-Dt-qL6" id="x9U-iB-T2K"/>
+                <outlet property="profilePicButton" destination="cap-8E-rL1" id="7zM-xk-jYh"/>
                 <outlet property="senderUsername" destination="Ydk-L9-e7o" id="YT3-h3-DbQ"/>
             </connections>
             <point key="canvasLocation" x="34" y="53.5"/>

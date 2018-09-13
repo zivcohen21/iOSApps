@@ -18,18 +18,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sn8-DB-yle" userLabel="Avatar Image View">
-                        <rect key="frame" x="267" y="10" width="53" height="53"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="53" id="3yy-OI-Fnj"/>
-                            <constraint firstAttribute="width" constant="53" id="eRA-aW-ebC"/>
-                        </constraints>
-                    </imageView>
                     <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="WaL-yt-ghC" userLabel="Message Background">
                         <rect key="frame" x="111" y="10" width="150" height="179.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5tV-gx-3Hh" userLabel="Sender Username">
-                                <rect key="frame" x="9" y="0.0" width="141" height="17"/>
+                                <rect key="frame" x="15" y="10" width="135" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -54,10 +47,11 @@
                         <color key="backgroundColor" red="0.1819814891" green="0.69426733259999995" blue="0.53024792669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Nje-HH-klS" firstAttribute="centerY" secondItem="WaL-yt-ghC" secondAttribute="centerY" id="30j-dX-njK"/>
+                            <constraint firstItem="Nje-HH-klS" firstAttribute="top" secondItem="5tV-gx-3Hh" secondAttribute="bottom" constant="5" id="33x-ww-T4s"/>
+                            <constraint firstItem="5tV-gx-3Hh" firstAttribute="top" secondItem="WaL-yt-ghC" secondAttribute="top" constant="10" id="BR1-Fr-mnH"/>
                             <constraint firstItem="Nje-HH-klS" firstAttribute="centerX" secondItem="WaL-yt-ghC" secondAttribute="centerX" id="QZ6-yI-Y3H"/>
                             <constraint firstAttribute="trailing" secondItem="5tV-gx-3Hh" secondAttribute="trailing" id="U9F-p4-UVM"/>
-                            <constraint firstItem="5tV-gx-3Hh" firstAttribute="leading" secondItem="WaL-yt-ghC" secondAttribute="leading" constant="9" id="YfS-tR-pha"/>
-                            <constraint firstItem="5tV-gx-3Hh" firstAttribute="top" secondItem="WaL-yt-ghC" secondAttribute="top" id="Yhy-rX-9Z4"/>
+                            <constraint firstItem="5tV-gx-3Hh" firstAttribute="leading" secondItem="WaL-yt-ghC" secondAttribute="leading" constant="15" id="YfS-tR-pha"/>
                             <constraint firstAttribute="bottom" secondItem="Fe7-sU-8ex" secondAttribute="bottom" constant="5" id="phT-Xw-LUm"/>
                             <constraint firstItem="Fe7-sU-8ex" firstAttribute="leading" secondItem="WaL-yt-ghC" secondAttribute="leading" constant="8" id="s1P-64-XuH"/>
                             <constraint firstAttribute="width" secondItem="Nje-HH-klS" secondAttribute="width" constant="30" id="xwM-w3-eAS"/>
@@ -69,21 +63,31 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msU-3e-MQb">
+                        <rect key="frame" x="267" y="10" width="53" height="53"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="53" id="6r0-xu-kzP"/>
+                            <constraint firstAttribute="width" constant="53" id="Zuw-94-Zu4"/>
+                        </constraints>
+                        <connections>
+                            <action selector="profilePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="1jM-Pf-gVK"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="WaL-yt-ghC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Khm-Jh-cSe"/>
-                    <constraint firstItem="sn8-DB-yle" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="TPI-jm-vIn"/>
+                    <constraint firstAttribute="trailing" secondItem="msU-3e-MQb" secondAttribute="trailing" id="Tck-W1-wr5"/>
+                    <constraint firstAttribute="bottom" secondItem="msU-3e-MQb" secondAttribute="bottom" constant="136.5" id="Tfo-c6-hgj"/>
+                    <constraint firstItem="msU-3e-MQb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="dkM-kX-jeP"/>
                     <constraint firstAttribute="bottom" secondItem="WaL-yt-ghC" secondAttribute="bottom" constant="10" id="ldh-hG-CUV"/>
                     <constraint firstItem="WaL-yt-ghC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="rYS-qa-lXd"/>
-                    <constraint firstItem="sn8-DB-yle" firstAttribute="leading" secondItem="WaL-yt-ghC" secondAttribute="trailing" constant="6" id="tl8-kC-fdS"/>
-                    <constraint firstAttribute="bottom" secondItem="sn8-DB-yle" secondAttribute="bottom" constant="136.5" id="xDp-zp-TB9"/>
-                    <constraint firstAttribute="trailing" secondItem="sn8-DB-yle" secondAttribute="trailing" id="zk7-md-g7d"/>
+                    <constraint firstItem="msU-3e-MQb" firstAttribute="leading" secondItem="WaL-yt-ghC" secondAttribute="trailing" constant="6" id="tvr-QP-t62"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="avatarImageView" destination="sn8-DB-yle" id="sxq-bE-5dr"/>
                 <outlet property="messageBackground" destination="WaL-yt-ghC" id="yE8-3z-fhW"/>
                 <outlet property="messageDate" destination="Fe7-sU-8ex" id="nfH-6v-nVd"/>
+                <outlet property="profilePicButton" destination="msU-3e-MQb" id="UH7-GY-TJs"/>
                 <outlet property="sendImageView" destination="Nje-HH-klS" id="MLJ-j0-vxb"/>
                 <outlet property="senderUsername" destination="5tV-gx-3Hh" id="xz3-I9-pbW"/>
             </connections>

@@ -17,6 +17,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // Declare instance variables here
     var chatViewModel = ChatViewModel()
+    var datesUtils = DatesUtils()
+    var messageFieldViewHeight: CGFloat = 0.0
+    var messagePressed: Message?
+    //var tapGestureRecognizer = UITapGestureRecognizer()
     
     // We've pre-linked the IBOutlets
     @IBOutlet var heightConstraint: NSLayoutConstraint!
@@ -24,8 +28,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var messageTextfield: UITextField!
     @IBOutlet var messageTableView: UITableView!
 
-    var datesUtils = DatesUtils()
-    var messageFieldViewHeight: CGFloat = 0.0
     
     @IBOutlet weak var textFieldView: UIView!
     
@@ -43,6 +45,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         messageTableView.addGestureRecognizer(tapGesture)
         
+        //tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        
+        
         messageTableView.register(UINib(nibName: "MyMessageTableViewCell", bundle: nil), forCellReuseIdentifier: "myMessageTableViewCell")
         messageTableView.register(UINib(nibName: "CustomMessageCell", bundle: nil), forCellReuseIdentifier: "customMessageCell")
         messageTableView.register(UINib(nibName: "MyImageMessageTableViewCell", bundle: nil), forCellReuseIdentifier: "myImageMessageTableViewCell")
@@ -56,52 +61,62 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell = MessageCell()
+        let currentMessage = chatViewModel.messageArray[indexPath.row]
         
-        if chatViewModel.messageArray[indexPath.row].email == Auth.auth().currentUser?.email {
-            if chatViewModel.messageArray[indexPath.row].isImage {
-                print(chatViewModel.messageArray[indexPath.row].messageDate)
+        if currentMessage.email == Auth.auth().currentUser?.email {
+            
+            if currentMessage.isImage {
+                print(currentMessage.messageDate)
                 cell = tableView.dequeueReusableCell(withIdentifier: "myImageMessageTableViewCell", for: indexPath) as! MyImageMessageTableViewCell
-                (cell as! MyImageMessageTableViewCell).sendImageView.sd_setImage(with: URL(string: chatViewModel.messageArray[indexPath.row].messageBody), placeholderImage: UIImage(named: "placeholder.png"))
+                (cell as! MyImageMessageTableViewCell).sendImageView.sd_setImage(with: URL(string: currentMessage.messageBody), placeholderImage: UIImage(named: "placeholder.png"))
             }
             else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "myMessageTableViewCell", for: indexPath) as! MyMessageTableViewCell
-                cell.messageBody.text = chatViewModel.messageArray[indexPath.row].messageBody
+                cell.messageBody.text = currentMessage.messageBody
            }
             
-            cell.avatarImageView.backgroundColor = UIColor.flatMint()
+            cell.profilePicButton.backgroundColor = UIColor.flatMint()
             cell.messageBackground.backgroundColor = UIColor.flatSkyBlue()
         }
         else {
-            if chatViewModel.messageArray[indexPath.row].isImage {
+            if currentMessage.isImage {
                 cell = tableView.dequeueReusableCell(withIdentifier: "imageMessageTableViewCell", for: indexPath) as! ImageMessageTableViewCell
-                (cell as! ImageMessageTableViewCell).sendImageView.sd_setImage(with: URL(string: chatViewModel.messageArray[indexPath.row].messageBody), placeholderImage: UIImage(named: "placeholder.png"))
+                (cell as! ImageMessageTableViewCell).sendImageView.sd_setImage(with: URL(string: currentMessage.messageBody), placeholderImage: UIImage(named: "placeholder.png"))
             }
             else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "customMessageCell", for: indexPath) as! CustomMessageCell
-                cell.messageBody.text = chatViewModel.messageArray[indexPath.row].messageBody
+                cell.messageBody.text = currentMessage.messageBody
            }
             
-            cell.avatarImageView.backgroundColor = UIColor.flatWatermelon()
+            cell.profilePicButton.backgroundColor = UIColor.flatWatermelon()
             cell.messageBackground.backgroundColor = UIColor.flatGray()
         }
         
-        cell.senderUsername.text = chatViewModel.messageArray[indexPath.row].sender
-        cell.messageDate.text = datesUtils.getDateAsStringWithoutSec(chatViewModel.messageArray[indexPath.row].messageDate)
-        let profileImageUrl = chatViewModel.messageArray[indexPath.row].profileImage
+        cell.senderUsername.text = currentMessage.sender
+        cell.messageDate.text = datesUtils.getDateAsStringWithoutSec(currentMessage.messageDate)
+        let profileImageUrl = currentMessage.profileImage
         if profileImageUrl.count > 0
         {
-            cell.avatarImageView.sd_setImage(with: URL(string: profileImageUrl), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.profilePicButton.sd_setBackgroundImage(with: URL(string: profileImageUrl), for: .normal)
+            cell.profilePicButton.clipsToBounds = true
+            cell.profilePicButton.layer.cornerRadius = cell.profilePicButton.frame.size.width / 2
+            //cell.avatarImageView.sd_setImage(with: URL(string: profileImageUrl), placeholderImage: UIImage(named: "placeholder.png"))
         }
         else {
-            cell.avatarImageView.image = UIImage(named: "egg")
+            cell.profilePicButton.setImage(UIImage(named: "egg"), for: .normal)
         }
         
-
+        cell.messageIndex = indexPath.row
+        cell.profilePicButton.isUserInteractionEnabled = true
+        //cell.profilePicButton.addGestureRecognizer(tapGestureRecognizer)
+    
+        cell.delegate = self
+        
         return cell
     }
     
@@ -145,6 +160,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         messageTableView.scrollToBottom()
     }
+    
+//    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
+//    {
+//        let tappedImage = tapGestureRecognizer.view as! UIImageView
+//        self.performSegue(withIdentifier: "goToProfilePage", sender: self)
+//
+//    }
     
     func removeKeyboard() {
         
@@ -219,24 +241,30 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.present(myPickerController, animated: true, completion: nil)
     }
  
-//    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "goToProfilePage",
-//            let destination = segue.destination as? ProfileViewController,
-//            let index = messageTableView.indexPathForSelectedRow?.row
-//        {
-//            destination.userName = messageArray[index].sender
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("prepare 1")
+        if segue.identifier == "goToProfilePage",
+            let destination = segue.destination as? ProfileViewController,
+            let currMessage = messagePressed
+//            , let index = messageTableView.indexPathForSelectedRow?.row
+        {
+            //print(destination)
+            destination.user = chatViewModel.allUsers[currMessage.email]
+            destination.user?.profileImage = currMessage.profileImage
+        }
+    }
 }
 
-extension ChatViewController: ChatViewModelDelegate {
-    
+extension ChatViewController: ChatViewModelDelegate, MessageCellDelegate{
+
     internal func chatViewModelMessageRetrieved() {
+        
         self.messageTableView.reloadData()
         self.messageTableView.scrollToBottom()
     }
   
     internal func chatViewModelMessageSaved() {
+        
         self.messageTableView.reloadData()
         self.messageTableView.scrollToBottom()
         print("Message saved successfully!")
@@ -244,5 +272,12 @@ extension ChatViewController: ChatViewModelDelegate {
         self.messageTextfield.isEnabled = true
         self.sendButton.isEnabled = true
         self.messageTextfield.text = ""
+    }
+    
+    internal func messageCellProfilePressed(_ index: Int) {
+        
+        print("messageCellProfilePressed")
+        messagePressed = chatViewModel.messageArray[index]
+        self.performSegue(withIdentifier: "goToProfilePage", sender: self)
     }
 }

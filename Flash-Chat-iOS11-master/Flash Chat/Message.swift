@@ -24,4 +24,6 @@ class Message {
         self.isImage = isImage
         self.profileImage = profileImage
     }
+    
+    
 }

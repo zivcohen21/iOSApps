@@ -15,17 +15,10 @@ class CustomMessageCell: MessageCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code goes here
-        //avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
-//
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-//        avatarImageView.isUserInteractionEnabled = true
-//        avatarImageView.addGestureRecognizer(tapGestureRecognizer)
+        // avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
+
+        
     }
 
-//    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
-//    {
-//        let tappedImage = tapGestureRecognizer.view as! UIImageView
-//        self.performSegue(withIdentifier: "goToProfilePage", sender: self)
-//        
-//    }
+    
 }

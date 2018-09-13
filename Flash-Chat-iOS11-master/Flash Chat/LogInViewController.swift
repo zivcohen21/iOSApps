@@ -19,6 +19,9 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         passwordTextfield.isSecureTextEntry = true
+        
+        emailTextfield.text = "a@a.com"
+        passwordTextfield.text = "1q2w3e4r"
     }
     
     @IBAction func logInPressed(_ sender: AnyObject) {

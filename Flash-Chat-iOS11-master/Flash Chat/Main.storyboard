@@ -278,9 +278,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="332" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="YFa-cq-ge3" kind="push" identifier="goToProfilePage" id="xhW-jW-1qA"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -357,6 +354,7 @@
                         <outlet property="messageTextfield" destination="W4K-YF-skl" id="rE7-AO-1UD"/>
                         <outlet property="sendButton" destination="JiI-fB-I1v" id="Oxz-hw-PLC"/>
                         <outlet property="textFieldView" destination="WpY-IA-acB" id="mHB-Q5-bia"/>
+                        <segue destination="YFa-cq-ge3" kind="push" identifier="goToProfilePage" id="UOs-e2-YGc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -366,7 +364,7 @@
         <!--Profile-->
         <scene sceneID="kQC-mA-SoF">
             <objects>
-                <viewController id="YFa-cq-ge3" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" id="YFa-cq-ge3" customClass="ProfileViewController" customModule="Flash_Chat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7V3-cS-QHo"/>
                         <viewControllerLayoutGuide type="bottom" id="Qq6-Ft-pgc"/>
@@ -374,13 +372,72 @@
                     <view key="view" contentMode="scaleToFill" id="Wjh-uc-n8N">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" pagingEnabled="YES" canCancelContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gAu-3s-nLk">
+                                <rect key="frame" x="0.0" y="234" width="375" height="371"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="371" id="St1-JR-gse"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FormItemTableViewCell" id="D4h-ae-WSa">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="D4h-ae-WSa" id="unk-Ds-4Dr">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K3q-pO-rE2">
+                                <rect key="frame" x="112" y="74" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="BIq-Db-C8L"/>
+                                    <constraint firstAttribute="width" constant="150" id="tES-2k-bNN"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DG0-Qa-HDX">
+                                <rect key="frame" x="127" y="607" width="120" height="40"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Hct-jk-Qtk"/>
+                                    <constraint firstAttribute="width" constant="120" id="UOw-gR-dao"/>
+                                </constraints>
+                                <color key="tintColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Save Changes"/>
+                                <connections>
+                                    <action selector="SaveChangesPressed:" destination="YFa-cq-ge3" eventType="touchUpInside" id="Kdm-7J-djE"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="gAu-3s-nLk" firstAttribute="top" secondItem="K3q-pO-rE2" secondAttribute="bottom" constant="10" id="WFY-ef-n3Q"/>
+                            <constraint firstItem="K3q-pO-rE2" firstAttribute="top" secondItem="7V3-cS-QHo" secondAttribute="bottom" constant="10" id="ZXM-9Z-MrH"/>
+                            <constraint firstItem="DG0-Qa-HDX" firstAttribute="centerX" secondItem="Wjh-uc-n8N" secondAttribute="centerX" id="frS-25-T0J"/>
+                            <constraint firstItem="gAu-3s-nLk" firstAttribute="leading" secondItem="Wjh-uc-n8N" secondAttribute="leading" id="ho5-5e-XXq"/>
+                            <constraint firstItem="K3q-pO-rE2" firstAttribute="centerX" secondItem="Wjh-uc-n8N" secondAttribute="centerX" id="mQw-IJ-itY"/>
+                            <constraint firstItem="Qq6-Ft-pgc" firstAttribute="top" secondItem="DG0-Qa-HDX" secondAttribute="bottom" constant="20" id="nqB-fv-jfJ"/>
+                            <constraint firstItem="DG0-Qa-HDX" firstAttribute="top" secondItem="gAu-3s-nLk" secondAttribute="bottom" constant="2" id="oNu-4A-y6r"/>
+                            <constraint firstAttribute="trailing" secondItem="gAu-3s-nLk" secondAttribute="trailing" id="pq5-5B-D5N"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="6TX-cb-rMF"/>
+                    <connections>
+                        <outlet property="bottomHeight" destination="nqB-fv-jfJ" id="YKf-MI-faC"/>
+                        <outlet property="generalView" destination="Wjh-uc-n8N" id="l94-Gj-wct"/>
+                        <outlet property="heightConstraint" destination="oNu-4A-y6r" id="8sJ-NA-TWi"/>
+                        <outlet property="profileImageView" destination="K3q-pO-rE2" id="uEL-tD-2JJ"/>
+                        <outlet property="saveButtonHeight" destination="Hct-jk-Qtk" id="SjQ-qE-mKO"/>
+                        <outlet property="saveChangesButton" destination="DG0-Qa-HDX" id="WDB-26-kLv"/>
+                        <outlet property="userDetailsTableView" destination="gAu-3s-nLk" id="gef-bv-VQ7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fIb-3B-1ST" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1712" y="12"/>
+            <point key="canvasLocation" x="1711.5" y="11.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kGX-IT-aXC">
