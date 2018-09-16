@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SKPhotoBrowser
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, formTableViewCellDelegate {
     
@@ -78,26 +79,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @objc func tableViewTapped() {
+        
         moveViewDown()
     }
     
     @objc func imageViewTapped() {
-        print("imageViewTapped")
-//        profileImageView.frame = UIScreen.main.bounds
-//        profileImageView.backgroundColor = .black
-//        profileImageView.contentMode = .center
-//        profileImageView.clipsToBounds = true
-//        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
-//        //self.view.addSubview(profileImageView)
-//        //self.navigationController?.isNavigationBarHidden = true
-//        //self.tabBarController?.tabBar.isHidden = true
+        
+        var images = [SKPhoto]()
+        let photo = SKPhoto.photoWithImage(profileImageView.image!)
+        images.append(photo)
+        let browser = SKPhotoBrowser(photos: images)
+        browser.initializePageIndex(0)
+        present(browser, animated: true, completion: {})
     }
     
     func textFieldValueChanged(value: String, key: String) {
-        print("textFieldValueChanged")
-        print("key: \(key) value: \(value)")
+        
         profileViewModel.detailsItemsDict[key]?.value = value
-        //profileViewModel.checkValidValue(key: key)
     }
     
     func textFieldEndEditing(value: String, key: String) {
@@ -110,7 +108,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.heightConstraint.constant = self.buttomViewHeight + self.bottomHeight.constant + self.saveButtonHeight.constant
             self.view.layoutIfNeeded()
         })
-        //userDetailsTableView.reloadData()
     }
     
     @objc func keyboardWillShow(notification: Notification) {

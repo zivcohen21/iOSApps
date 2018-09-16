@@ -76,6 +76,7 @@ PODS:
   - SDWebImage (4.4.2):
     - SDWebImage/Core (= 4.4.2)
   - SDWebImage/Core (4.4.2)
+  - SKPhotoBrowser (5.1.0)
   - SkyFloatingLabelTextField (3.5.1)
   - SVProgressHUD (2.2.5)
 
@@ -86,6 +87,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - SDWebImage (~> 4.0)
+  - SKPhotoBrowser
   - SkyFloatingLabelTextField (~> 3.0)
   - SVProgressHUD
 
@@ -106,6 +108,7 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - SDWebImage
+    - SKPhotoBrowser
     - SkyFloatingLabelTextField
     - SVProgressHUD
 
@@ -125,9 +128,10 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  SKPhotoBrowser: c20c1da34d737b4e3e101feead6c8dd92ebf860a
   SkyFloatingLabelTextField: 4cbeece9c3aae97c6019d8fae511cb5b755874f7
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: e5a24b75f8df2d488f0fdfd7be0205628a17eb18
+PODFILE CHECKSUM: b4589464aae218a018ab3b0816a0a3100753827c
 
 COCOAPODS: 1.5.3

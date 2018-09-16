@@ -62,7 +62,6 @@ class ProfileViewModel {
                         user.country = self.dictToSave[self.countryKey]!
                         user.city = self.dictToSave[self.cityKey]!
                         user.street = self.dictToSave[self.streetKey]!
-                
                     }
                 }
                 

@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "57C3849389C56BED500D4EE0A76CE0A6"
-               BlueprintName = "SkyFloatingLabelTextField"
+               BlueprintIdentifier = "6724615514B1F7B90D5991B8D80EA63B"
+               BlueprintName = "SKPhotoBrowser"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "SkyFloatingLabelTextField.framework">
+               BuildableName = "SKPhotoBrowser.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
