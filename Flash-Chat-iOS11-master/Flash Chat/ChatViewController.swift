@@ -60,7 +60,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        moveViewDown()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -214,6 +216,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         navigationController?.navigationBar.isUserInteractionEnabled = isEnable
         sendButton.isUserInteractionEnabled = isEnable
         messageTextfield.isUserInteractionEnabled = isEnable
+    }
+    
+    func moveViewDown() {
+        messageTableView.endEditing(true)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.heightConstraint.constant = self.messageFieldViewHeight
+            self.view.layoutIfNeeded()
+        })
+        messageTableView.reloadData()
     }
     
     @IBAction func sendPressed(_ sender: AnyObject) {

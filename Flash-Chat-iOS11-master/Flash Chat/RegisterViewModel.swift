@@ -92,7 +92,6 @@ class RegisterViewModel {
                     }
                     
                     self.delegate?.registerViewModelAfterRegisterPressed()
-                   
                 }
             }
             else {
@@ -131,6 +130,8 @@ class RegisterViewModel {
     
     func saveDetailsAndGoToChat()
     {
+        let uid = Auth.auth().currentUser?.uid
+        //self.userDetailsDB.child(uid!).updateChildValues(self.dictToSave) {
         self.userDetailsDB.childByAutoId().setValue(self.dictToSave) {
             (error, reference) in
             if error != nil {

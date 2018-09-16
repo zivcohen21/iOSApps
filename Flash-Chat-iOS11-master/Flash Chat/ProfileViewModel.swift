@@ -22,7 +22,7 @@ class ProfileViewModel {
     var keys: [String] = []
     var detailsItemsDict: [String: FormItem] = [:]
     let userDetailsDB = Database.database().reference().child("userDetails")
-    let uid = Auth.auth().currentUser?.uid
+    let currentUser = Auth.auth().currentUser
     
     func initData(_ user: User) {
         
@@ -44,15 +44,29 @@ class ProfileViewModel {
         
     }
     
-    func validDateAndSave() {
-        
-        if detailsItemsDict[userNameKey]?.value.isEmpty == false{
+    func validDateAndSave(_ user: User) {
+        print("validDateAndSave1")
+        if detailsItemsDict[userNameKey]?.value.isEmpty == false {
+            print("validDateAndSave2")
             for (key, item) in detailsItemsDict {
                 dictToSave[key] = item.value
-                
             }
-            
-            let ref = self.userDetailsDB.child(String)
+            userDetailsDB.queryOrdered(byChild: "email").queryEqual(toValue: currentUser?.email).observeSingleEvent(of: .value, with: { (snapshot) in
+                if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                    for child in result  {
+                        self.userDetailsDB.child(child.key).updateChildValues(self.dictToSave)
+                        print(child.key)
+                        
+                        user.name = self.dictToSave[self.userNameKey]!
+                        user.phone = self.dictToSave[self.phoneKey]!
+                        user.country = self.dictToSave[self.countryKey]!
+                        user.city = self.dictToSave[self.cityKey]!
+                        user.street = self.dictToSave[self.streetKey]!
+                
+                    }
+                }
+                
+            })
         }
     }
     

@@ -9,8 +9,8 @@
 import UIKit
 import Firebase
 
-class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, formTableViewCellDelegate {
+    
     var profileViewModel = ProfileViewModel()
     var user: User?
     var buttomViewHeight: CGFloat = 0.0
@@ -26,29 +26,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if user?.email != Auth.auth().currentUser?.email {
-            saveChangesButton.alpha = 0.0
-            saveChangesButton.isUserInteractionEnabled = false
-        }
-        
-        buttomViewHeight = heightConstraint.constant
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         userDetailsTableView.addGestureRecognizer(tapGesture)
         generalView.addGestureRecognizer(tapGesture)
         
         let tapImage = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         profileImageView.addGestureRecognizer(tapImage)
-    
-        
-        profileViewModel.initData(user!)
-        
+
         userDetailsTableView.delegate = self
         userDetailsTableView.dataSource = self
         
         userDetailsTableView.register(UINib(nibName: "FormItemTableViewCell", bundle: nil), forCellReuseIdentifier: "FormItemTableViewCell")
-        
-        userDetailsTableView.reloadData()
         
         profileImageView.sd_setImage(with: URL(string: (user?.profileImage)!), placeholderImage: UIImage(named: "placeholder.png"))
         profileImageView.clipsToBounds = true
@@ -56,6 +44,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewWillAppear")
+        buttomViewHeight = heightConstraint.constant
+        if user?.email != Auth.auth().currentUser?.email {
+            saveChangesButton.alpha = 0.0
+            saveChangesButton.isUserInteractionEnabled = false
+        }
+        profileViewModel.initData(user!)
+        userDetailsTableView.reloadData()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         moveViewDown()
     }
@@ -74,10 +72,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.initCell(item, profileViewModel.keys[indexPath.row])
             item.indexPath = indexPath
             print(cell.key)
-            
-            
         }
-        
+        cell.delegate = self
         return cell
     }
     
@@ -86,6 +82,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @objc func imageViewTapped() {
+        print("imageViewTapped")
 //        profileImageView.frame = UIScreen.main.bounds
 //        profileImageView.backgroundColor = .black
 //        profileImageView.contentMode = .center
@@ -94,6 +91,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 //        //self.view.addSubview(profileImageView)
 //        //self.navigationController?.isNavigationBarHidden = true
 //        //self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    func textFieldValueChanged(value: String, key: String) {
+        print("textFieldValueChanged")
+        print("key: \(key) value: \(value)")
+        profileViewModel.detailsItemsDict[key]?.value = value
+        //profileViewModel.checkValidValue(key: key)
+    }
+    
+    func textFieldEndEditing(value: String, key: String) {
+        print("textFieldEndEditing")
     }
     
     func moveViewDown() {
@@ -119,7 +127,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func SaveChangesPressed(_ sender: Any) {
         
-        profileViewModel.validDateAndSave()
+        profileViewModel.validDateAndSave(user!)
+        let alert = UIAlertController(title: "Updated", message: "User Details Updated", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     
